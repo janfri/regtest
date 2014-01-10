@@ -10,3 +10,7 @@ Rim.setup do |p|
   p.description = p.summary
   p.homepage = 'http://gitorious.org/regtest'
 end
+
+task :test do
+  # nothing
+end
