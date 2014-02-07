@@ -1,3 +1,8 @@
+0.3.0
+Printing some statistics.
+Using regtest itself.
+Update documentation.
+
 0.2.0
 Update rake task (set lib directory to $LOAD_PATH).
 
