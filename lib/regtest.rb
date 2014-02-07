@@ -1,8 +1,8 @@
 #
-# Regtest - Regression testing for Ruby
+# Regtest - Simple Regression Testing For Ruby Projects
 #
 # Copyright 2014 by Jan Friedrich (janfri26@gmail.com)
-# License: Rubys License
+# License: Regtest is licensed under the same terms as Ruby itself.
 #
 
 require 'yaml'
