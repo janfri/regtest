@@ -2,6 +2,9 @@ require 'rim'
 require 'rim/check_version'
 require 'rim/gem'
 
+$:.unshift 'lib'
+require 'regtest/task'
+
 Rim.setup do |p|
   p.name = 'regtest'
   p.version = '0.2.0'

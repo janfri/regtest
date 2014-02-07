@@ -1,0 +1,6 @@
+---
+sample: String result
+result: some text
+---
+sample: Division by zero
+exception: divided by 0
