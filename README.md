@@ -12,7 +12,9 @@ new tags in newer versions.
 ## Installation
 
 Installing the gem with
+
     gem install regtest
+
 or put a copy of regtest.rb in your project.
 
 ## Using
@@ -27,6 +29,7 @@ The idea behind regtest is the following workflow:
 
 A samples file is a simple Ruby script with one ore more samples,
 for example
+
     require 'regtest'
 
     Regtest.sample 'String result' do
@@ -50,6 +53,7 @@ Results could also be an Array or Hash with such values.
 
 You can also include Regtest to have the sample method at
 top level.
+
     require 'regtest'
     include Regtest
 
@@ -64,12 +68,15 @@ in your Ruby application.
 ### Running Samples
 
 Wether you run your examples manually
+
     ruby -I lib regtest/*.rb
+
 or using the Rake task of regtest:
 Add the line
+
     require 'regtest/task'
-to your Rakefile and you can run your samples with
-    rake regtest
+
+to your Rakefile and you can run your samples with `rake regtest`.
 
 ### Checking Results
 
@@ -77,13 +84,17 @@ The results of each samples file are stored as a collection of
 YAML documents in a corresponding results file (YAML) per samples
 file.
 For example for the samples files
+
     regtest/foo.rb
     regtest/bar.rb
+
 are the corresponding results files
+
     regtest/foo.yml
     regtest/bar.yml
 
 So the content of the results file of the example above is
+
     ---
     sample: String result
     result: some text
