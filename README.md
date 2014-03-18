@@ -48,7 +48,7 @@ for example
 The name of the sample (parameter of the `Regtest.sample` method)
 and the results of the samples (return value of the block) are stored
 in YAML format. So it should be a YAML friendly value as String,
-Number, boolean value, Symbol.
+Number, Boolean value, Symbol.
 Results could also be an Array or Hash with such values.
 
 You can also include Regtest to have the sample method at
@@ -67,7 +67,7 @@ in your Ruby application.
 
 ### Running Samples
 
-Wether you run your examples manually
+Whether you run your examples manually
 
     ruby -I lib regtest/*.rb
 
@@ -104,8 +104,8 @@ So the content of the results file of the example above is
 
 Each time you run one ore more samples file the corresponding
 results file will be overwritten (or generated if not yet
-existend) with the actual result values of your samples.
-So source code version control programm is the tool to determine
+existent) with the actual result values of your samples.
+So source code version control program is the tool to determine
 changes between older runs of the samples.
 Therefore the samples file and their corresponding results files
 should be taken under version control.
