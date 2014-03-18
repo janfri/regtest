@@ -1,5 +1,6 @@
+REGTEST_FILES = FileList.new('regtest/**/*.rb')
+
 desc 'Run regression tests'
 task :regtest do
-  filenames = FileList.new('regtest/*.rb')
-  sh "ruby -I lib #{filenames.join(' ')}"
+  sh "ruby -I lib:regtest #{REGTEST_FILES}"
 end
