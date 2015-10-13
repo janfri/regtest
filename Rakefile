@@ -6,7 +6,7 @@ require 'regtest/task'
 
 Rim.setup do |p|
   p.name = 'regtest'
-  p.version = '0.4.0'
+  p.version = '0.5.0'
   p.authors = 'Jan Friedrich'
   p.email = 'janfri26@gmail.com'
   p.summary = 'Regression testing in Ruby.'

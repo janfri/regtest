@@ -1,3 +1,7 @@
+0.5.0
+New method Regtest.combinations to build all combinations of a
+Hash-like object with arrays as values.
+
 0.4.0
 Improve rake task:
 - New constant REGTEST_FILES to define the Ruby files to work on.

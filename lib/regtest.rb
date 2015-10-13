@@ -34,7 +34,7 @@ module Regtest
     print '.'; $stdout.flush
   end
 
-  # Build all combinations of a Hashlike object with arrays as values.
+  # Build all combinations of a Hash-like object with arrays as values.
   # Return value is an array of OpenStruct instances.
   #
   # Example:
