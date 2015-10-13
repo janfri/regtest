@@ -1,0 +1,30 @@
+---
+sample: Combination 0
+result:
+  :a: 1
+  :b: :x
+---
+sample: Combination 1
+result:
+  :a: 1
+  :b: :y
+---
+sample: Combination 2
+result:
+  :a: 2
+  :b: :x
+---
+sample: Combination 3
+result:
+  :a: 2
+  :b: :y
+---
+sample: Combination 4
+result:
+  :a: 3
+  :b: :x
+---
+sample: Combination 5
+result:
+  :a: 3
+  :b: :y

@@ -1,10 +1,11 @@
 #
 # Regtest - Simple Regression Testing For Ruby Projects
 #
-# Copyright 2014 by Jan Friedrich (janfri26@gmail.com)
+# Copyright 2014, 2015 by Jan Friedrich (janfri26@gmail.com)
 # License: Regtest is licensed under the same terms as Ruby itself.
 #
 
+require 'ostruct'
 require 'yaml'
 
 module Regtest
@@ -33,11 +34,35 @@ module Regtest
     print '.'; $stdout.flush
   end
 
+  # Build all combinations of a Hashlike object with arrays as values.
+  # Return value is an array of OpenStruct instances.
+  #
+  # Example:
+  #   require 'ostruct'
+  #   o = OpenStruct.new
+  #   o.a = [1,2,3]
+  #   o.b = [:x, :y]
+  #   Regtest.combinations(o).map(&:to_h) # => [{:a=>1, :b=>:x}, {:a=>1, :b=>:y}, {:a=>2, :b=>:x}, {:a=>2, :b=>:y}, {:a=>3, :b=>:x}, {:a=>3, :b=>:y}]
+  #
+  def combinations hashy
+    h = hashy.to_h
+    a = h[h.keys[0]].product(*h.values[1..-1])
+    res = []
+    a.each do |e|
+      o = OpenStruct.new
+      h.keys.zip(e) do |k, v|
+        o[k] = v
+      end
+      res << o
+    end
+    res
+  end
+
   class << self
     attr_accessor :count, :results, :start
   end
 
-  module_function :sample
+  module_function :sample, :combinations
 
 end
 
