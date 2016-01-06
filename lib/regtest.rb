@@ -46,7 +46,7 @@ module Regtest
   #
   def combinations hashy
     h = hashy.to_h
-    a = h[h.keys[0]].product(*h.values[1..-1])
+    a = h.values[0].product(*h.values[1..-1])
     res = []
     a.each do |e|
       o = OpenStruct.new
