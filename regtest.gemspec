@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.date = "2016-01-06"
   s.description = "Regression testing in Ruby."
   s.email = "janfri26@gmail.com"
-  s.files = ["Changelog", "README.md", "Rakefile", "lib/regtest", "lib/regtest.rb", "lib/regtest/task.rb"]
+  s.files = ["Changelog", "README.md", "Rakefile", "lib/regtest", "lib/regtest.rb", "lib/regtest/task.rb", "regtest/combinations.rb", "regtest/combinations.yml", "regtest/example.rb", "regtest/example.yml", "regtest/no_samples.rb"]
   s.homepage = "http://gitorious.org/regtest"
   s.licenses = ["Ruby"]
   s.rubygems_version = "2.5.1"
@@ -26,10 +26,13 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rim>, ["~> 2.6"])
+      s.add_development_dependency(%q<regtest>, ["~> 0.4"])
     else
       s.add_dependency(%q<rim>, ["~> 2.6"])
+      s.add_dependency(%q<regtest>, ["~> 0.4"])
     end
   else
     s.add_dependency(%q<rim>, ["~> 2.6"])
+    s.add_dependency(%q<regtest>, ["~> 0.4"])
   end
 end
