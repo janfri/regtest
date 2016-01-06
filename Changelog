@@ -1,4 +1,7 @@
-0.5.1
+0.5.2
+Bugfix REGTEST_FILES: Distinguish between rb and yml files.
+
+0.5.1 (yanked)
 Include yml files in REGTEST_FILES for rake task.
 
 0.5.0
