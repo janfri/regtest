@@ -13,7 +13,7 @@ Rim.setup do |p|
   p.summary = 'Regression testing in Ruby.'
   p.license = 'Ruby'
   p.description = p.summary
-  p.homepage = 'http://gitorious.org/regtest'
+  p.homepage = 'https://github.com/janfri/regtest'
 end
 
 task :test do
