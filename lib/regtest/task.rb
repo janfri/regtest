@@ -1,4 +1,4 @@
-REGTEST_FILES = FileList.new('regtest/**/*.rb')
+REGTEST_FILES = FileList.new('regtest/**/*.{rb,yml}')
 
 desc 'Run regression tests'
 task :regtest do
