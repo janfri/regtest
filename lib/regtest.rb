@@ -3,7 +3,7 @@
 #
 # Regtest - Simple Regression Testing For Ruby Projects
 #
-# Copyright 2014, 2015 by Jan Friedrich (janfri26@gmail.com)
+# Copyright 2014, 2015 by Jan Friedrich <janfri26@gmail.com>
 # License: Regtest is licensed under the same terms as Ruby itself.
 #
 
