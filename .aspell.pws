@@ -1,12 +1,15 @@
-personal_ws-1.1 en 11 
+personal_ws-1.1 en 14 
 dir
 Bugfix
+ostruct
+Gemfile
 Rakefile
 exiftool
 yml
-YAML
+yaml
 workflow
 catched
 regtest
 rb
 Friedrich
+OpenStruct
