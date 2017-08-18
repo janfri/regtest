@@ -3,3 +3,4 @@
 .rimrc
 pkg
 .ruby-version
+Gemfile.lock
