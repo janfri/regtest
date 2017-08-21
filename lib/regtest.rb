@@ -73,7 +73,6 @@ at_exit do
   sample_count = Regtest.count
   sample_time = Time.now - Regtest.start
   puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, sample_time, sample_count / sample_time)
-  save_start = Time.now
   Regtest.results.each_pair do |filename,arr|
     File.open(filename, 'w') do |f|
       arr.each do |h|
@@ -81,7 +80,4 @@ at_exit do
       end
     end
   end
-  files_count = Regtest.results.size
-  save_time = Time.now - save_start
-  puts format("%d files written in %.2f s (%.2f files/s)", files_count, save_time, files_count / save_time)
 end
