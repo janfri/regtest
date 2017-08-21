@@ -62,6 +62,18 @@ module Regtest
 
   class << self
     attr_accessor :count, :results, :start
+
+    def report_and_save
+      time = Time.now - start
+      puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", count, time, count / time)
+      results.each_pair do |filename, arr|
+        File.open(filename, 'w') do |f|
+          arr.each do |h|
+            f.write h.to_yaml
+          end
+        end
+      end
+    end
   end
 
   module_function :sample, :combinations
@@ -70,14 +82,5 @@ end
 
 at_exit do
   ARGV.each {|a| load a}
-  sample_count = Regtest.count
-  sample_time = Time.now - Regtest.start
-  puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, sample_time, sample_count / sample_time)
-  Regtest.results.each_pair do |filename,arr|
-    File.open(filename, 'w') do |f|
-      arr.each do |h|
-        f.write h.to_yaml
-      end
-    end
-  end
+  Regtest.report_and_save
 end
