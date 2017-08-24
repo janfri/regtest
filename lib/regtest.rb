@@ -28,7 +28,7 @@ module Regtest
     output_filename = caller.first.split(/:/).first.sub(/\.rb/, '') << '.yml'
     unless Regtest.results[output_filename]
       puts unless Regtest.results.empty?
-      puts File.basename(output_filename, '.yml')
+      puts output_filename
       Regtest.results[output_filename] = []
     end
     Regtest.results[output_filename] << h
