@@ -1,0 +1,11 @@
+---
+sample: metatest
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ..
+
+    8 samples executed in x.xx s (x.xx samples/s)
+  stderr: ''
