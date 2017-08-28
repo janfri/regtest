@@ -8,4 +8,6 @@ result:
     ..
 
     8 samples executed in x.xx s (x.xx samples/s)
+
+    No SCM found. Please check results manually.
   stderr: ''

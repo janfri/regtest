@@ -77,6 +77,12 @@ module Regtest
         end
       end
     end
+
+    # Checking results, should be overwritten in SCM plugins
+    # e.g. regtest/git
+    def check_results
+      puts "\nNo SCM found. Please check results manually."
+    end
   end
 
   module_function :sample, :combinations
@@ -87,4 +93,5 @@ at_exit do
   ARGV.each {|a| load a}
   Regtest.report
   Regtest.save
+  Regtest.check_results
 end
