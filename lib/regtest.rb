@@ -3,7 +3,7 @@
 #
 # Regtest - Simple Regression Testing For Ruby Projects
 #
-# Copyright 2014, 2015 by Jan Friedrich <janfri26@gmail.com>
+# Copyright 2014, 2015, 2017 by Jan Friedrich <janfri26@gmail.com>
 # License: Regtest is licensed under the same terms as Ruby itself.
 #
 
@@ -63,9 +63,12 @@ module Regtest
   class << self
     attr_accessor :count, :results, :start
 
-    def report_and_save
+    def report
       time = Time.now - start
       puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", count, time, count / time)
+    end
+
+    def save
       results.each_pair do |filename, arr|
         File.open(filename, 'w') do |f|
           arr.each do |h|
@@ -82,5 +85,6 @@ end
 
 at_exit do
   ARGV.each {|a| load a}
-  Regtest.report_and_save
+  Regtest.report
+  Regtest.save
 end
