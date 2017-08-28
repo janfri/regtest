@@ -1,6 +1,7 @@
-*~
 *.swp
+*~
+.regtestrc
 .rimrc
-pkg
 .ruby-version
 Gemfile.lock
+pkg

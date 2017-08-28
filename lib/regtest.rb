@@ -95,6 +95,9 @@ module Regtest
 
 end
 
+# load .regtestrc from home directory and actual directory if exists
+Dir[File.join(Dir.home, '.regtestrc'), '.regtestrc'].each {|fn| load fn}
+
 at_exit do
   ARGV.each {|a| load a}
   Regtest.report
