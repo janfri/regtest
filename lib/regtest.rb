@@ -27,8 +27,8 @@ module Regtest
     end
     output_filename = caller.first.split(/:/).first.sub(/\.rb/, '') << '.yml'
     unless Regtest.results[output_filename]
-      puts unless Regtest.results.empty?
-      puts output_filename
+      print_filename(nil) unless Regtest.results.empty?
+      print_filename output_filename
       Regtest.results[output_filename] = []
     end
     Regtest.results[output_filename] << h
@@ -65,7 +65,7 @@ module Regtest
 
     def report
       time = Time.now - start
-      puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", count, time, count / time)
+      print_statistics format("\n\n%d samples executed in %.2f s (%.2f samples/s)", count, time, count / time)
     end
 
     def save
@@ -81,7 +81,13 @@ module Regtest
     # Checking results, should be overwritten in SCM plugins
     # e.g. regtest/git
     def check_results
-      puts "\nNo SCM found. Please check results manually."
+      Regtest.print_unknown_result "\nNo SCM found. Please check results manually."
+    end
+
+    # Define methods for different types of reported data,
+    # is overwritten by regtest/colorize
+    %w(success fail unknown_result filename statistics).each do |name|
+      define_method "print_#{name}" do |string| puts string end
     end
   end
 
