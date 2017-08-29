@@ -9,5 +9,5 @@ result:
 
     8 samples executed in x.xx s (x.xx samples/s)
 
-    No SCM found. Please check results manually.
+    Please check results manually. Regtest isn't able to do that.
   stderr: ''

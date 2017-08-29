@@ -81,7 +81,7 @@ module Regtest
     # Checking results, should be overwritten in SCM plugins
     # e.g. regtest/git
     def check_results
-      Regtest.print_unknown_result "\nNo SCM found. Please check results manually."
+      Regtest.print_unknown_result "\nPlease check results manually. Regtest isn't able to do that."
     end
 
     # Define methods for different types of reported data,
