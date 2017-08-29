@@ -84,14 +84,11 @@ module Regtest
       puts "\nPlease check results manually. Regtest isn't able to do that.", type: :unknown_result
     end
 
-    # Redefine print with an additional type parameter to support colorizing in plugins
-    def print *args, type: nil
-      super *args
-    end
-
-    # Redefine puts with an additional type parameter to support colorizing in plugins
-    def puts *args, type: nil
-      super *args
+    # Redefine print and puts with an additional type parameter to support colorizing in plugins
+    %w(print puts).each do |name|
+      define_method name do |*args, type: nil|
+        super *args
+      end
     end
   end
 
