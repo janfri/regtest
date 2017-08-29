@@ -95,8 +95,11 @@ module Regtest
 
 end
 
-# load .regtestrc from home directory and actual directory if exists
-Dir[File.join(Dir.home, '.regtestrc'), '.regtestrc'].each {|fn| load fn}
+# Load .regtestrc from home directory and actual directory if exists
+# and ENV['NOREGTESTRC'] is not set (usefull for testing)
+unless ENV['NOREGTESTRC']
+  Dir[File.join(Dir.home, '.regtestrc'), '.regtestrc'].each {|fn| load fn}
+end
 
 at_exit do
   ARGV.each {|a| load a}
