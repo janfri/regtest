@@ -1,7 +1,8 @@
-personal_ws-1.1 en 16 
+personal_ws-1.1 en 18 
 dir
 Bugfix
 ostruct
+filename
 Gemfile
 basename
 Rakefile
@@ -9,6 +10,7 @@ exiftool
 yml
 yaml
 workflow
+refactoring
 catched
 regtest
 rb
