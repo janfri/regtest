@@ -12,11 +12,12 @@ require 'yaml'
 
 module Regtest
 
-  @count = 0
-  @results = {}
   @start = Time.now
+  @results = {}
+  @statistics = []
 
   def sample name
+    start = Time.now
     h = {}
     name = name.to_s if name.kind_of?(Symbol)
     h['sample'] = name
@@ -32,8 +33,14 @@ module Regtest
       Regtest.results[output_filename] = []
     end
     Regtest.results[output_filename] << h
-    Regtest.count += 1
     print '.'; $stdout.flush
+    stop = Time.now
+    o = OpenStruct.new
+    o.filename = output_filename
+    o.sample = name
+    o.time = stop - start
+    @statistics << o
+    name
   end
 
   # Build all combinations of a Hash-like object with arrays as values.
@@ -61,11 +68,12 @@ module Regtest
   end
 
   class << self
-    attr_accessor :count, :results, :start
+    attr_reader :results, :statistics, :start
 
     def report
       time = Time.now - start
-      puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", count, time, count / time), type: :statistics
+      sample_count = statistics.size
+      puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
     def save
