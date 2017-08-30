@@ -1,11 +1,12 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
+$:.unshift 'lib'
+
 require 'rim/tire'
 require 'rim/regtest'
 require 'rim/version'
 
-$:.unshift 'lib'
 require 'regtest/task'
 
 Rim.setup do |p|
