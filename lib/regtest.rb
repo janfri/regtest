@@ -35,11 +35,7 @@ module Regtest
     Regtest.results[output_filename] << h
     print '.'; $stdout.flush
     stop = Time.now
-    o = OpenStruct.new
-    o.filename = output_filename
-    o.sample = name
-    o.time = stop - start
-    @statistics << o
+    @statistics << OpenStruct.new(filename: output_filename, sample: name, time: stop - start)
     name
   end
 
@@ -105,7 +101,7 @@ module Regtest
 end
 
 # Load .regtestrc from home directory and actual directory if exists
-# and ENV['NOREGTESTRC'] is not set (usefull for testing)
+# and ENV['NOREGTESTRC'] is not set
 unless ENV['NOREGTESTRC']
   Dir[File.join(Dir.home, '.regtestrc'), '.regtestrc'].each {|fn| load fn}
 end
