@@ -11,5 +11,5 @@ REGTEST_FILES = REGTEST_FILES_RB + REGTEST_FILES_YML
 
 desc 'Run regression tests'
 task :regtest do
-  sh "ruby -I lib:regtest #{REGTEST_FILES_RB}"
+  sh *%w(ruby -I lib:regtest), *REGTEST_FILES_RB
 end

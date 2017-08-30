@@ -15,9 +15,10 @@ Dir.mktmpdir('regtest') do |tmpdir|
     end
   end
   Dir.chdir tmpdir do
-    _, o, e = Open3.popen3("ruby -I #{File.join(__dir__, '../lib')} #{Dir['*.rb'].sort.join(' ')}")
+    lib_dir = File.join(__dir__, '../lib')
+    o, e, _ = Open3.capture3(*['ruby', '-I', lib_dir], *Dir['*.rb'].sort)
     Regtest.sample 'metatest' do
-      res = {'stdout' => o.read, 'stderr' => e.read}
+      res = {'stdout' => o, 'stderr' => e}
       # levelling runtime specific values
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
       res

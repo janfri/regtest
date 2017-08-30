@@ -6,8 +6,10 @@ result:
     ......
     example.yml
     ..
+    filename with spaces.yml
+    .
 
-    8 samples executed in x.xx s (x.xx samples/s)
+    9 samples executed in x.xx s (x.xx samples/s)
 
     Please check results manually. Regtest isn't able to do that.
   stderr: ''
