@@ -29,14 +29,14 @@ module Regtest
     end
     output_filename = caller.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
     unless Regtest.results[output_filename]
-      report "\n", type: :filename unless Regtest.results.empty?
-      report output_filename, type: :filename
+      Regtest.report "\n", type: :filename unless Regtest.results.empty?
+      Regtest.report output_filename, type: :filename
       Regtest.results[output_filename] = []
     end
     Regtest.results[output_filename] << h
     print '.'; $stdout.flush
     stop = Time.now
-    @statistics << OpenStruct.new(filename: output_filename, sample: name, time: stop - start)
+    Regtest.statistics << OpenStruct.new(filename: output_filename, sample: name, time: stop - start)
     name
   end
 
