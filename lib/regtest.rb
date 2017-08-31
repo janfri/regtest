@@ -26,7 +26,7 @@ module Regtest
     rescue Exception => e
       h['exception'] = e.message
     end
-    output_filename = caller.first.split(/:/).first.sub(/\.rb/, '') << '.yml'
+    output_filename = caller.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
     unless Regtest.results[output_filename]
       report "\n", type: :filename unless Regtest.results.empty?
       report output_filename, type: :filename
