@@ -66,7 +66,7 @@ module Regtest
   class << self
     attr_reader :results, :statistics, :start
 
-    def report
+    def report_statistics
       time = Time.now - start
       sample_count = statistics.size
       puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
@@ -108,7 +108,7 @@ end
 
 at_exit do
   ARGV.each {|a| load a}
-  Regtest.report
   Regtest.save
+  Regtest.report_statistics
   Regtest.check_results
 end
