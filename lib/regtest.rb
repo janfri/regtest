@@ -17,7 +17,7 @@ module Regtest
   @statistics = []
 
   # Define a sample
-  def sample name
+  def sample name, &_
     start = Time.now
     h = {}
     name = name.to_s if name.kind_of?(Symbol)
