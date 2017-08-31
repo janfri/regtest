@@ -16,6 +16,7 @@ module Regtest
   @results = {}
   @statistics = []
 
+  # Define a sample
   def sample name
     start = Time.now
     h = {}
@@ -66,12 +67,14 @@ module Regtest
   class << self
     attr_reader :results, :statistics, :start
 
+    # Report some statistics, could be overwritten by plugins
     def report_statistics
       time = Time.now - start
       sample_count = statistics.size
       report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
+    # Save all results to the corrsponding files
     def save
       results.each_pair do |filename, arr|
         File.open(filename, 'w') do |f|
@@ -82,12 +85,14 @@ module Regtest
       end
     end
 
-    # Checking results, should be overwritten in SCM plugins
+    # Checking results, should be overwritten by SCM plugins
     # e.g. regtest/git
     def check_results
       report "\nPlease check results manually. Regtest isn't able to do that.", type: :unknown_result
     end
 
+    # Report text to output with possible type, could be overwritten
+    # by plugins e.g. regtest/colorize
     def report *args, type: nil
       puts *args
     end

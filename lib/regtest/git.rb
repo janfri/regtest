@@ -10,6 +10,8 @@ begin
     module Regtest
 
       module Git
+
+        # Redefine Regtest.check_results
         def check_results
           output_files = Regtest.results.keys
           git_stat, _, _ = Open3.capture3(*%w(git status --porcelain --), *output_files)
