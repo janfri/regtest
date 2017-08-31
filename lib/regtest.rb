@@ -28,8 +28,8 @@ module Regtest
     end
     output_filename = caller.first.split(/:/).first.sub(/\.rb/, '') << '.yml'
     unless Regtest.results[output_filename]
-      puts nil, type: :filename unless Regtest.results.empty?
-      puts output_filename, type: :filename
+      report "\n", type: :filename unless Regtest.results.empty?
+      report output_filename, type: :filename
       Regtest.results[output_filename] = []
     end
     Regtest.results[output_filename] << h
@@ -69,7 +69,7 @@ module Regtest
     def report_statistics
       time = Time.now - start
       sample_count = statistics.size
-      puts format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
+      report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
     def save
@@ -85,14 +85,11 @@ module Regtest
     # Checking results, should be overwritten in SCM plugins
     # e.g. regtest/git
     def check_results
-      puts "\nPlease check results manually. Regtest isn't able to do that.", type: :unknown_result
+      report "\nPlease check results manually. Regtest isn't able to do that.", type: :unknown_result
     end
 
-    # Redefine print and puts with an additional type parameter to support colorizing in plugins
-    %w(print puts).each do |name|
-      define_method name do |*args, type: nil|
-        super *args
-      end
+    def report *args, type: nil
+      puts *args
     end
   end
 
