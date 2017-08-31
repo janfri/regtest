@@ -27,12 +27,12 @@ module Regtest
       h['exception'] = e.message
     end
     output_filename = caller.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
-    unless Regtest.results[output_filename]
-      report "\n", type: :filename unless Regtest.results.empty?
+    unless results[output_filename]
+      report "\n", type: :filename unless results.empty?
       report output_filename, type: :filename
-      Regtest.results[output_filename] = []
+      results[output_filename] = []
     end
-    Regtest.results[output_filename] << h
+    results[output_filename] << h
     print '.'; $stdout.flush
     stop = Time.now
     @statistics << OpenStruct.new(filename: output_filename, sample: name, time: stop - start)
