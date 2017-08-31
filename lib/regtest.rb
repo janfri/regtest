@@ -88,7 +88,7 @@ module Regtest
     # Checking results, should be overwritten by SCM plugins
     # e.g. regtest/git
     def check_results
-      report "\nPlease check results manually. Regtest isn't able to do that.", type: :unknown_result
+      report "\nPlease check result files manually. Regtest isn't able to do that.", type: :unknown_result
     end
 
     # Report text to output with possible type, could be overwritten
