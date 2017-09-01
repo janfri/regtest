@@ -64,7 +64,14 @@ module Regtest
     res
   end
 
+  module_function :sample, :combinations
+
+  refine Kernel do
+    include Regtest
+  end
+
   class << self
+
     attr_reader :results, :statistics, :start
 
     # Report some statistics, could be overwritten by plugins
@@ -96,9 +103,8 @@ module Regtest
     def report *args, type: nil
       puts *args
     end
-  end
 
-  module_function :sample, :combinations
+  end
 
 end
 
