@@ -1,4 +1,4 @@
 ---
 sample: spaces in filenames
-result: If you can read this in the results file "regtest/filename with spaces.yml"
-  than regtest can handle filenames with spaces. :)
+result: If you can read this in the results file "filename with spaces.yml" than regtest
+  can handle filenames with spaces. :)
