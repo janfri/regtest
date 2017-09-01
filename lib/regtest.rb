@@ -74,14 +74,14 @@ module Regtest
 
     attr_reader :results, :statistics, :start
 
-    # Report some statistics, could be overwritten by plugins
+    # Report some statistics, could be overwritten by plugins.
     def report_statistics
       time = Time.now - start
       sample_count = statistics.size
       report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
-    # Save all results to the corresponding files
+    # Save all results to the corresponding files.
     def save
       results.each_pair do |filename, arr|
         File.open(filename, 'w') do |f|
@@ -99,7 +99,7 @@ module Regtest
     end
 
     # Report text to output with possible type, could be overwritten
-    # by plugins e.g. regtest/colorize
+    # by plugins e.g. regtest/colorize.
     def report *args, type: nil
       puts *args
     end
@@ -109,7 +109,7 @@ module Regtest
 end
 
 # Load .regtestrc from home directory and actual directory if exists
-# and ENV['NOREGTESTRC'] is not set
+# and ENV['NOREGTESTRC'] is not set.
 unless ENV['NOREGTESTRC']
   Dir[File.join(Dir.home, '.regtestrc'), '.regtestrc'].each {|fn| load fn}
 end

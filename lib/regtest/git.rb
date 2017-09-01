@@ -3,7 +3,7 @@
 
 require 'open3'
 
-# Check if git is available and current directory is part of a git repository
+# Check if git is available and current directory is part of a git repository.
 begin
   _, p = Open3.capture2e('git status --porcelain')
   if p.exitstatus == 0
@@ -11,7 +11,7 @@ begin
 
       module Git
 
-        # Redefine Regtest.check_results
+        # Redefine Regtest.check_results.
         def check_results
           output_files = Regtest.results.keys
           git_stat, _, _ = Open3.capture3(*%w(git status --porcelain --), *output_files)

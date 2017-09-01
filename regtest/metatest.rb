@@ -9,7 +9,7 @@ require 'tmpdir'
 Dir.mktmpdir('regtest') do |tmpdir|
   Dir.chdir __dir__ do
     Dir['*.rb'].each do |filename|
-      # beware of endless recursion
+      # Beware of endless recursion.
       next if filename =~ /metatest/
       FileUtils.cp filename, tmpdir
     end
@@ -19,7 +19,7 @@ Dir.mktmpdir('regtest') do |tmpdir|
     o, e, _ = Open3.capture3(*['ruby', '-I', lib_dir], *Dir['*.rb'].sort)
     Regtest.sample 'metatest' do
       res = {'stdout' => o, 'stderr' => e}
-      # levelling runtime specific values
+      # Levelling out runtime specific differences.
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
       res
     end
