@@ -31,6 +31,5 @@ Rim.setup do |p|
   p.homepage = 'https://github.com/janfri/regtest'
 end
 
-task :test do
-  # nothing
-end
+task :test => :regtest
+task :default => :test
