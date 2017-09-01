@@ -74,7 +74,7 @@ module Regtest
       report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
-    # Save all results to the corrsponding files
+    # Save all results to the corresponding files
     def save
       results.each_pair do |filename, arr|
         File.open(filename, 'w') do |f|
