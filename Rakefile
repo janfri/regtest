@@ -29,6 +29,7 @@ Rim.setup do |p|
     combinations of data).
   END
   p.homepage = 'https://github.com/janfri/regtest'
+  p.dependencies << %w(colorize ~>0.8)
 end
 
 task :test => :regtest
