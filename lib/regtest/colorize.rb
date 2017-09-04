@@ -6,14 +6,16 @@ begin
 
   module Regtest
 
+    # Regtest plugin to have colorized reports.
+    # It uses the great colorized gem
+    # (see https://rubygems.org/gems/colorize)
     module Colorize
 
-      # Color mapping (you can change it via Regtest.colors)
-      @colors = (%i(success fail unknown_result filename statistics).zip %i(green red yellow cyan default)).to_h
+      @mapping = (%i(success fail unknown_result filename statistics).zip %i(green red yellow cyan default)).to_h
 
       # Redefine Regtest.report.
       def report *args, type: nil
-        color = Colorize.colors[type]
+        color = Colorize.mapping[type]
         if color && $stdout.tty?
           args = args.map {|a| ColorizedString[a.to_s].colorize(color)}
         end
@@ -21,7 +23,12 @@ begin
       end
 
       class << self
-        attr_reader :colors
+        # Color mapping (all parameters of ColorizedString.colorize are supported
+        # (see https://github.com/fazibear/colorize#usage)
+        # Examples:
+        #   Regtest::Colorize.mapping[:filename] = :light_blue
+        #   Regtest::Colorize.mapping[:statistics] = {color: :cyan, mode: :italic}
+        attr_accessor :mapping
       end
 
     end
