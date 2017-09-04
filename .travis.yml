@@ -1,9 +1,9 @@
 language: ruby
+before_install:
+  - echo "require 'regtest/git'" > .regtestrc
 rvm:
-  - 2.0.0
   - 2.1.0
   - 2.2.0
   - 2.3.0
   - 2.4.0
   - ruby-head
-env: RUBYOPT="-I lib -r regtest/git"
