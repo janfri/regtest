@@ -14,6 +14,10 @@ begin
         # Redefine Regtest.check_results.
         def check_results
           output_files = Regtest.results.keys
+          if output_files.empty?
+            report "\nNothing to do.", type: :success
+            return
+          end
           git_stat, _, _ = Open3.capture3(*%w(git status --porcelain --), *output_files)
           case git_stat
           when ''
