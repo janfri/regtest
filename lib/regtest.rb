@@ -116,6 +116,6 @@ at_exit do
   ARGV.each {|a| load a}
   Regtest.save
   Regtest.report_statistics
-  check = Regtest.check_results
-  exit Regtest.exit_codes[check]
+  check_state = Regtest.check_results
+  exit Regtest.exit_codes[check_state]
 end
