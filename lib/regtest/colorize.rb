@@ -5,7 +5,7 @@ begin
   module Regtest
 
     # Regtest plugin to have colorized reports.
-    # It uses the great colorized gem
+    # It uses the great colorize gem
     # (see https://rubygems.org/gems/colorize)
     module Colorize
 
