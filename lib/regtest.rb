@@ -15,6 +15,8 @@ module Regtest
   @start = Time.now
   @results = {}
   @statistics = []
+  @exit_codes = Hash.new(1)
+  @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
 
   # Define a sample
   def sample name, &_
@@ -65,7 +67,7 @@ module Regtest
   end
 
   class << self
-    attr_reader :results, :statistics, :start
+    attr_reader :exit_codes, :results, :statistics, :start
 
     # Report some statistics, could be overwritten by plugins.
     def report_statistics
@@ -87,8 +89,10 @@ module Regtest
 
     # Checking results, should be overwritten by SCM plugins
     # e.g. regtest/git
+    # @return Symbol with check result (one of :success, :unknown_result or :fail)
     def check_results
       report "\nPlease check result files manually. Regtest isn't able to do that.", type: :unknown_result
+      :unknown_result
     end
 
     # Report text to output with possible type, could be overwritten
@@ -112,5 +116,6 @@ at_exit do
   ARGV.each {|a| load a}
   Regtest.save
   Regtest.report_statistics
-  Regtest.check_results
+  check = Regtest.check_results
+  exit Regtest.exit_codes[check]
 end

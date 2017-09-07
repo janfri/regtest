@@ -16,26 +16,28 @@ begin
           output_files = Regtest.results.keys
           if output_files.empty?
             report "\nNothing to do.", type: :success
-            return
+            return :success
           end
           git_stat, _, _ = Open3.capture3(*%w(git status --porcelain --), *output_files)
           case git_stat
           when ''
             report "\nLooks good. :)", type: :success
+            return :success
           when /^.M/ # modified file
             report "\nThere are changes in your sample results!", type: :fail
             system *%w(git status -s --), *output_files
-            exit 1
+            return :fail
           when /^.\?/ # unknown file
             report "\nThere are new sample result files. Please check them manually.", type: :unknown_result
             system *%w(git status -s --), *output_files
-            exit 1
+            return :unknown_result
           else
             report "\nYour sample results are in a bad condition!", type: :fail
             system *%w(git status -s --), *output_files
-            exit 1
+            return :fail
           end
         end
+
       end
 
       class << self
