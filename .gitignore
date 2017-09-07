@@ -3,5 +3,5 @@
 .regtestrc
 .rimrc
 .ruby-version
-gems.locked
+Gemfile.lock
 pkg
