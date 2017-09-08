@@ -1,13 +1,17 @@
-# Regtest - Simple Regression Testing For Ruby Projects
+# Regtest - Simple Regression Testing With Ruby
 
 ## Description
 
-This library support a very simple way to do regression testing in Ruby
-projects.  You write Ruby scripts with samples. Run these and get the sample
-results as YAML output besides your scripts. Check both the scripts and the YAML
-files with the results in you Source Code Control System.  When you run the
-scrips on a later (or even previous) version of your code a simple diff show you
-if and how the changes in your code impact the results of your samples.
+This library support a very simple way to do regression testing with Ruby. It
+is not limited to Ruby projects you can use it also in other contexts where you
+can extract data with Ruby.
+
+You write Ruby scripts with samples. Run these and get the sample results as
+results files besides your scripts. These are normally in YAML format. Check
+both the scripts and the results files in you Source Code Management System
+(SCM). When you run the scrips on a later (or even previous) version of your
+code a simple diff show you if and how the changes in your code or environment
+impact the results of your samples.
 
 This is not a replacement for unit testing but a complement: You can produce a
 lot of samples with a small amount of Ruby code (e.g. a large number of
@@ -27,7 +31,7 @@ or add
 ```ruby
 gem 'regtest'
 ```
-to your Gemfile or put a copy of `regtest.rb` in your project.
+to your Gemfile.
 
 
 ## Using
@@ -35,9 +39,11 @@ to your Gemfile or put a copy of `regtest.rb` in your project.
 The idea behind regtest is the following workflow:
   1. Writing samples
   2. Running samples
-  3. Checking results (differences between the actual results and the results of
-     a previous run of your samples using the diff functionality of your Source
-     Code Control System)
+  3. Commit samples and result files to SCM.
+  4. Change your code and / or external environment.
+  5. Rerun your samples
+  6. Check sample results for changes (this is normally automatically done with
+     a regtest plugin like regtest/git).
 
 
 ### Writing Samples
@@ -62,15 +68,13 @@ end
 ```
 
 The name of the sample (parameter of the `Regtest.sample` method) and the
-results of the samples (return value of the block) are stored in YAML format. So
-it should be a YAML friendly value as `String`, `Number`, `Boolean value`,
-`Symbol`.  Results could also be an `Array` or `Hash` with such values.
+results of the samples (return value of the block) are stored in YAML format.
+So it should be a YAML friendly value as `String`, `Number`, `Boolean value`,
+`Symbol`. Results could also be an `Array` or `Hash` with such values.
 
-
-#### Helpers
-
-There is a method `Regtest.combinations` to generate a lot of combinations the
-easy way. An example:
+In many cases you want to generate a lot of combinations of input data in your
+sample code. For this there is a method `Regtest.combinations` to generate a
+lot of combinations the easy way. An example:
 
 ```ruby
 require 'ostruct'
@@ -79,22 +83,13 @@ require 'regtest'
 o = OpenStruct.new
 o.a = [1,2,3]
 o.b = [:x, :y]
-Regtest.combinations(o).map(&:to_h)
-# => [{:a=>1, :b=>:x}, {:a=>1, :b=>:y}, {:a=>2, :b=>:x}, {:a=>2, :b=>:y}, {:a=>3, :b=>:x}, {:a=>3, :b=>:y}]
+Regtest.combinations(o)
+# => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
+#     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
+#     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>] 
 ```
 
 See also the combinations example in the `regtest` folder.
-
-You can also include `Regtest` to have the `sample` and `combinations method at top level.
-
-```ruby
-require 'regtest'
-include Regtest
-
-sample :x do
-  :x
-end
-```
 
 By convention sample files are stored in a directory `regtest` in your Ruby application.
 
@@ -119,7 +114,7 @@ to your `Rakefile` and you can run your samples with `rake regtest`.
 ### Checking Results
 
 The results of each samples file are stored as a collection of YAML documents in
-a corresponding results file (YAML) per samples file.  For example for the
+a corresponding results file per samples file. For example for the
 samples files
 
 ```sh
@@ -148,11 +143,52 @@ exception: divided by 0
 Note: Each sample is represented by a YAML document in the corresponding YAML
 file.
 
+
+## Configuration and Plugins
+
+You can adapt the behaviour of regtest with plugins. To configure this and
+maybe other things regtest support a simple rc file mechanism. While loading
+regtest via `require 'regtest'` it looks for a file `.regtestrc` first in your
+home directory and then in the local directory. So you can do global
+configurations in the first one and project specific configurations in the
+latter.
+
+For example the following is a good default when you want colorized output and
+use git as your SCM:
+
+```ruby
+require 'regtest/colorize'
+# adapt some colorizing if wanted
+Regtest::Colorize.mapping[:filename] = :blue
+Regtest::Colorize.mapping[:statistics] = {mode: :italic}
+
+require 'regtest/git'
+```
+
 Each time you run one ore more samples file the corresponding results file will
 be overwritten (or generated if not yet existent) with the actual result values
-of your samples.  So Source Code Version Control program is the tool to
-determine changes between older runs of the samples.  Therefore the samples file
-and their corresponding results files should be taken under version control.
+of your samples. The determination of changes between the results of actual and
+older runs of the samples is done by your SCM. So the sample files and their
+corresponding results files should be taken under version control.
+
+Normally the check of changes in results is done automatically by a regtest
+plugin like regtest/git (see example for `.regtestrc` above). In this case the
+report will show you if there are changes or not and the exit code of the
+script is accordingly set. The standard values are: 0 for success, 1 for an
+unknown result (normally a new results file) and 2 for failure. If you use
+plain regtest without a SCM plugin the exit code is 1 (= unknown result).
+
+You can change the exit codes for the states with `Regtest.exit_codes` for example:
+
+```ruby
+Regtest.exit_codes[:unknown_result] = 0 
+Regtest.exit_codes[:fail] = 0 
+```
+
+This also should be don in a `.regtest` file and not in the sample files.
+
+Because in a `.regtestrc` file are individual configuration aspects of your
+workflow and environment it should not be checked into your SCM.
 
 
 ## Further information
