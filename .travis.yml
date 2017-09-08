@@ -1,6 +1,6 @@
 language: ruby
 before_install:
-  - echo "require 'regtest/git'\nrequire 'regtest/colorize'" > .regtestrc
+  - echo "require 'regtest/git'; require 'regtest/colorize'" > .regtestrc
 rvm:
   - 2.1
   - 2.2
