@@ -1,7 +1,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 #
-# Regtest - Simple Regression Testing For Ruby Projects
+# Regtest - Simple Regression Testing With Ruby
 #
 # Copyright 2014, 2015, 2017 by Jan Friedrich <janfri26@gmail.com>
 # License: Regtest is licensed under the same terms as Ruby itself.
@@ -51,11 +51,15 @@ module Regtest
     #
     # Example:
     #   require 'ostruct'
+    #   require 'regtest'
+    #
     #   o = OpenStruct.new
     #   o.a = [1,2,3]
     #   o.b = [:x, :y]
-    #   Regtest.combinations(o).map(&:to_h) # => [{:a=>1, :b=>:x}, {:a=>1, :b=>:y}, {:a=>2, :b=>:x}, {:a=>2, :b=>:y}, {:a=>3, :b=>:x}, {:a=>3, :b=>:y}]
-    #
+    #   Regtest.combinations(o)
+    #   # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
+    #   #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
+    #   #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
     def combinations hashy
       h = hashy.to_h
       a = h.values[0].product(*h.values[1..-1])

@@ -9,6 +9,8 @@ begin
   if p.exitstatus == 0
     module Regtest
 
+      # Regtest plugin for git (results are checked automatically when running
+      # regtest)
       module Git
 
         # Redefine Regtest.check_results.
