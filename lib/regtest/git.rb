@@ -20,9 +20,6 @@ begin
           end
           git_stat, _, _ = Open3.capture3(*%w(git status --porcelain --), *output_files)
           case git_stat
-          when ''
-            report "\nLooks good. :)", type: :success
-            return :success
           when /^.M/ # modified file
             report "\nThere are changes in your sample results!", type: :fail
             system *%w(git status -s --), *output_files
@@ -31,6 +28,10 @@ begin
             report "\nThere are new sample result files. Please check them manually.", type: :unknown_result
             system *%w(git status -s --), *output_files
             return :unknown_result
+          when '', /^. /
+            report "\nLooks good. :)", type: :success
+            system *%w(git status -s --), *output_files
+            return :success
           else
             report "\nYour sample results are in a bad condition!", type: :fail
             system *%w(git status -s --), *output_files
