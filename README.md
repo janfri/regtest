@@ -143,6 +143,12 @@ exception: divided by 0
 Note: Each sample is represented by a YAML document in the corresponding YAML
 file.
 
+Each time you run one ore more samples file the corresponding results files will
+be overwritten (or generated if not yet existent) with the actual result values
+of your samples. The determination of changes between the results of actual and
+older runs of the samples is done by your SCM. So the sample files and their
+corresponding results files should be taken under version control.
+
 
 ## Configuration and Plugins
 
@@ -164,12 +170,6 @@ Regtest::Colorize.mapping[:statistics] = {mode: :italic}
 
 require 'regtest/git'
 ```
-
-Each time you run one ore more samples file the corresponding results file will
-be overwritten (or generated if not yet existent) with the actual result values
-of your samples. The determination of changes between the results of actual and
-older runs of the samples is done by your SCM. So the sample files and their
-corresponding results files should be taken under version control.
 
 Normally the check of changes in results is done automatically by a regtest
 plugin like regtest/git (see example for `.regtestrc` above). In this case the
