@@ -22,11 +22,10 @@ Rim.setup do |p|
     can extract data with Ruby.
 
     You write Ruby scripts with samples. Run these and get the sample results as
-    results files besides your scripts. These are normally in YAML format. Check
-    both the scripts and the results files in you Source Code Management System
-    (SCM). When you run the scrips on a later (or even previous) version of your
-    code a simple diff show you if and how the changes in your code or environment
-    impact the results of your samples.
+    results files besides your scripts. Check both the scripts and the results
+    files in you Source Code Management System (SCM). When you run the scrips on a
+    later (or even previous) version of your code a simple diff show you if and how
+    the changes in your code or environment impact the results of your samples.
 
     This is not a replacement for unit testing but a complement: You can produce a
     lot of samples with a small amount of Ruby code (e.g. a large number of

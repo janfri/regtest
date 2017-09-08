@@ -7,11 +7,10 @@ is not limited to Ruby projects you can use it also in other contexts where you
 can extract data with Ruby.
 
 You write Ruby scripts with samples. Run these and get the sample results as
-results files besides your scripts. These are normally in YAML format. Check
-both the scripts and the results files in you Source Code Management System
-(SCM). When you run the scrips on a later (or even previous) version of your
-code a simple diff show you if and how the changes in your code or environment
-impact the results of your samples.
+results files besides your scripts. Check both the scripts and the results
+files in you Source Code Management System (SCM). When you run the scrips on a
+later (or even previous) version of your code a simple diff show you if and how
+the changes in your code or environment impact the results of your samples.
 
 This is not a replacement for unit testing but a complement: You can produce a
 lot of samples with a small amount of Ruby code (e.g. a large number of
@@ -69,7 +68,7 @@ end
 
 The name of the sample (parameter of the `Regtest.sample` method) and the
 results of the samples (return value of the block) are stored in YAML format.
-So it should be a YAML friendly value as `String`, `Number`, `Boolean value`,
+So it should be a YAML-friendly value as `String`, `Number`, `Boolean value`,
 `Symbol`. Results could also be an `Array` or `Hash` with such values.
 
 In many cases you want to generate a lot of combinations of input data in your
@@ -139,9 +138,6 @@ result: some text
 sample: Division by zero
 exception: divided by 0
 ```
-
-Note: Each sample is represented by a YAML document in the corresponding YAML
-file.
 
 Each time you run one ore more samples file the corresponding results files will
 be overwritten (or generated if not yet existent) with the actual result values
