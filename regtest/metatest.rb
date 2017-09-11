@@ -16,11 +16,12 @@ Dir.mktmpdir('regtest') do |tmpdir|
   end
   Dir.chdir tmpdir do
     lib_dir = File.join(__dir__, '../lib')
-    o, e, _ = Open3.capture3(*[{'NOREGTESTRC' => 'true'}, 'ruby', '-I', lib_dir], *Dir['*.rb'].sort)
+    o, e, ps = Open3.capture3(*[{'NOREGTESTRC' => 'true'}, 'ruby', '-I', lib_dir], *Dir['*.rb'].sort)
     Regtest.sample 'metatest' do
       res = {'stdout' => o, 'stderr' => e}
       # Levelling out runtime specific differences.
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
+      res['exitstatus'] = ps.exitstatus
       res
     end
   end
