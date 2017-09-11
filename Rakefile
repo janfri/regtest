@@ -8,10 +8,11 @@ require 'rim/regtest'
 require 'rim/version'
 
 require 'regtest/task'
+require 'regtest/version'
 
 Rim.setup do |p|
   p.name = 'regtest'
-  p.version = '1.1.0'
+  p.version = Regtest::VERSION
   p.authors = 'Jan Friedrich'
   p.email = 'janfri26@gmail.com'
   p.summary = 'Simple regression testing for Ruby projects.'
