@@ -1,7 +1,9 @@
-personal_ws-1.1 en 21 
+personal_ws-1.1 en 24 
+NOREGTESTRC
 dir
 Bugfix
 ostruct
+ENV
 filename
 Gemfile
 basename
@@ -11,6 +13,7 @@ yml
 yaml
 workflow
 refactoring
+metatests
 catched
 regtest
 rb

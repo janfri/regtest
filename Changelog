@@ -1,3 +1,23 @@
+2.0.0.pre
+This is a major release with following incompatibilities to regtest 1.x:
+The exit code of regtest is by default 1 if there are no plugins used which
+check the results like regtest/git.
+Further Ruby version 2.1 or higher is needed to use regtest.
+
+Regtest can now be customized with a .regtestrc file in the home directory
+and/or actual directory. If ENV['NOREGTESTRC'] is set then .regtestrc files
+will not be load.
+A simple plugin mechanism is implemented and two plugins are part of regtest:
+regtest/colorize and regtest/git. Plugins are usual activated by require in on
+of the .regtestrc files.
+
+Reporting of statistics for writing files is removed because it's not useful.
+Now the full filename for results files are reported when running regtest.
+Some metatests are added.
+Version constant Regtest::VERSION is also added.
+A lot of internal refactoring and improving documentation.
+
+
 1.1.0
 Remove output of statistics for writing files: It's not useful.
 Report filename of generated results not only the basename of it.

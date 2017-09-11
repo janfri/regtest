@@ -8,6 +8,7 @@
 #
 
 require 'ostruct'
+require 'regtest/version'
 require 'yaml'
 
 module Regtest
