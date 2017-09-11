@@ -5,8 +5,8 @@ require 'open3'
 
 # Check if git is available and current directory is part of a git repository.
 begin
-  _, p = Open3.capture2e('git status --porcelain')
-  if p.exitstatus == 0
+  _, ps = Open3.capture2e('git status --porcelain')
+  if ps.exitstatus == 0
     module Regtest
 
       # Regtest plugin for git (results are checked automatically when running
