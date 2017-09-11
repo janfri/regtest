@@ -1,0 +1,109 @@
+---
+sample: all new
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ..
+    filename with spaces.yml
+    .
+
+    9 samples executed in x.xx s (x.xx samples/s)
+
+    There is at least one new sample result file.
+    ?? combinations.yml
+    ?? example.yml
+    ?? filename with spaces.yml
+  stderr: ''
+  exitstatus: 1
+---
+sample: only one new
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ..
+    filename with spaces.yml
+    .
+
+    9 samples executed in x.xx s (x.xx samples/s)
+
+    There is at least one new sample result file.
+    A  combinations.yml
+    A  example.yml
+    ?? filename with spaces.yml
+  stderr: ''
+  exitstatus: 1
+---
+sample: one new one modified to index
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ...
+    filename with spaces.yml
+    .
+
+    10 samples executed in x.xx s (x.xx samples/s)
+
+    There are changes in your sample results!
+    A  combinations.yml
+    AM example.yml
+    ?? filename with spaces.yml
+  stderr: ''
+  exitstatus: 2
+---
+sample: one new one modified
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ...
+    filename with spaces.yml
+    .
+
+    10 samples executed in x.xx s (x.xx samples/s)
+
+    There are changes in your sample results!
+     M example.yml
+    ?? filename with spaces.yml
+  stderr: ''
+  exitstatus: 2
+---
+sample: all in index
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ...
+    filename with spaces.yml
+    .
+
+    10 samples executed in x.xx s (x.xx samples/s)
+
+    Looks good. :)
+    M  example.yml
+    A  "filename with spaces.yml"
+  stderr: ''
+  exitstatus: 0
+---
+sample: all commited
+result:
+  stdout: |
+    combinations.yml
+    ......
+    example.yml
+    ...
+    filename with spaces.yml
+    .
+
+    10 samples executed in x.xx s (x.xx samples/s)
+
+    Looks good. :)
+  stderr: ''
+  exitstatus: 0
