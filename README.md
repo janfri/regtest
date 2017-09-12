@@ -186,6 +186,23 @@ This also should be don in a `.regtest` file and not in the sample files.
 Because in a `.regtestrc` file are individual configuration aspects of your
 workflow and environment it should not be checked into your SCM.
 
+## Rake task
+
+Regtest includes a Rake task `regtest`. Per default it runs any `.rb` files
+under the `regtest` directory and includes all files under the `regtest`
+directory to the files packaged with gem.
+You can change these defaults like this
+
+```ruby
+require 'regtest/task'
+
+REGTEST_FILES_RB.clear << 'my_regtest_file.rb'
+REGTEST_FILES.clear << 'my_regtest_file.rb' << 'my_regtest_file.yml' << 'other_file'
+```
+
+It's a little bit old school like `CLEAN` and `CLOBBER` but I like the simple
+approach to use constants.
+
 
 ## Further information
 
