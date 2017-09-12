@@ -9,7 +9,7 @@
 REGTEST_FILES_RB = FileList.new('regtest/**/*.rb')
 
 # ALL Regtest files (sample files, results files and maybe other files)
-REGTEST_FILES = REGTEST_FILES_RB.map {|fn| Dir[fn.sub(/\.rb/, '.*')]}.flatten.sort
+REGTEST_FILES = FileList.new('regtest/**/*').select {|fn| File.file?(fn)}
 
 desc 'Run regression tests'
 task :regtest do
