@@ -15,7 +15,7 @@ Rim.setup do |p|
   p.version = Regtest::VERSION
   p.authors = 'Jan Friedrich'
   p.email = 'janfri26@gmail.com'
-  p.summary = 'Simple regression testing for Ruby projects.'
+  p.summary = 'Simple regression testing with Ruby.'
   p.license = 'Ruby'
   p.description = <<-END.gsub(/^ +/, '')
     This library support a very simple way to do regression testing with Ruby. It
