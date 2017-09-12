@@ -2,7 +2,7 @@
 
 ## Description
 
-This library support a very simple way to do regression testing with Ruby. It
+This library supports a very simple way to do regression testing with Ruby. It
 is not limited to Ruby projects you can use it also in other contexts where you
 can extract data with Ruby.
 
