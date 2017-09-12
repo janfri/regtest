@@ -28,18 +28,18 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<colorize>, ["~> 0.8"])
       s.add_development_dependency(%q<rake>, [">= 0"])
-      s.add_development_dependency(%q<rim>, ["~> 2.14"])
+      s.add_development_dependency(%q<rim>, ["~> 2.15"])
       s.add_development_dependency(%q<regtest>, ["~> 1.0"])
     else
       s.add_dependency(%q<colorize>, ["~> 0.8"])
       s.add_dependency(%q<rake>, [">= 0"])
-      s.add_dependency(%q<rim>, ["~> 2.14"])
+      s.add_dependency(%q<rim>, ["~> 2.15"])
       s.add_dependency(%q<regtest>, ["~> 1.0"])
     end
   else
     s.add_dependency(%q<colorize>, ["~> 0.8"])
     s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<rim>, ["~> 2.14"])
+    s.add_dependency(%q<rim>, ["~> 2.15"])
     s.add_dependency(%q<regtest>, ["~> 1.0"])
   end
 end
