@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 # If git isn't available skip this file
-_, ps = Open3.capture2e('git --version')
-if ps.exitstatus == 0
+begin
+  Open3.capture2e('git --version')
 
   require 'fileutils'
   require 'open3'
@@ -59,4 +59,5 @@ if ps.exitstatus == 0
       create_sample 'all commited'
     end
   end
+rescue Errno::ENOENT
 end
