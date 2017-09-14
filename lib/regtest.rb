@@ -15,17 +15,15 @@ module Regtest
 
   @start = Time.now
   @results = {}
-  @statistics = []
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
 
   class << self
 
-    attr_reader :exit_codes, :results, :statistics, :start
+    attr_reader :exit_codes, :results, :start
 
     # Define a sample
     def sample name, &_
-      start = Time.now
       h = {}
       name = name.to_s if name.kind_of?(Symbol)
       h['sample'] = name
@@ -42,8 +40,6 @@ module Regtest
       end
       Regtest.results[output_filename] << h
       print '.'; $stdout.flush
-      stop = Time.now
-      Regtest.statistics << OpenStruct.new(filename: output_filename, sample: name, time: stop - start)
       name
     end
 
@@ -78,7 +74,7 @@ module Regtest
     # Report some statistics, could be overwritten by plugins.
     def report_statistics
       time = Time.now - start
-      sample_count = statistics.size
+      sample_count = results.values.map(&:size).reduce(0, &:+)
       report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
