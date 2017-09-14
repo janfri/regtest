@@ -32,7 +32,7 @@ module Regtest
       rescue Exception => e
         h['exception'] = e.message
       end
-      output_filename = caller.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
+      output_filename = determine_output_filename
       unless Regtest.results[output_filename]
         Regtest.report "\n", type: :filename unless Regtest.results.empty?
         Regtest.report output_filename, type: :filename
@@ -69,6 +69,13 @@ module Regtest
         res << o
       end
       res
+    end
+
+    # Determine the filename of the ouput file (results file)
+    # with informations from caller
+    def determine_output_filename
+      rest = caller.drop_while {|c| c !~ /in `sample'/}.drop_while {|c| c =~ /in `sample'/}
+      rest.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
     end
 
     # Report some statistics, could be overwritten by plugins.
