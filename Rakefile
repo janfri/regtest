@@ -37,5 +37,11 @@ Rim.setup do |p|
   p.dependencies << %w(colorize ~>0.8)
 end
 
+# JRuby does not support escaping of filenames with spaces in Open3.capture3
+# therefore ignore metatest files when running on JRuby
+if RUBY_ENGINE == 'jruby'
+  REGTEST_FILES_RB.reject! {|fn| fn =~ /metatest/}
+end
+
 task :test => :regtest
 task :default => :test
