@@ -82,7 +82,7 @@ module Regtest
     def report_statistics
       time = Time.now - start
       sample_count = results.values.map(&:size).reduce(0, &:+)
-      report format("\n\n%d samples executed in %.2f s (%.2f samples/s)", sample_count, time, sample_count / time), type: :statistics
+      report format("\n\n%d samples executed in %.2f s (%d samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
 
     # Save all results to the corresponding files.

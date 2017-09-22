@@ -23,6 +23,7 @@ Dir.mktmpdir('regtest') do |tmpdir|
       res = {'stdout' => o, 'stderr' => e}
       # Levelling out runtime specific differences.
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
+      res['stdout'].gsub!(%r(\d+ samples/s), 'x samples/s')
       res['exitstatus'] = ps.exitstatus
       res
     end

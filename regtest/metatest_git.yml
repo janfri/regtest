@@ -9,7 +9,7 @@ result:
     filename with spaces.yml
     .
 
-    10 samples executed in x.xx s (x.xx samples/s)
+    10 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     ?? combinations.yml
@@ -28,7 +28,7 @@ result:
     filename with spaces.yml
     .
 
-    10 samples executed in x.xx s (x.xx samples/s)
+    10 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     A  combinations.yml
@@ -47,7 +47,7 @@ result:
     filename with spaces.yml
     .
 
-    11 samples executed in x.xx s (x.xx samples/s)
+    11 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
     A  combinations.yml
@@ -66,7 +66,7 @@ result:
     filename with spaces.yml
     .
 
-    11 samples executed in x.xx s (x.xx samples/s)
+    11 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
      M examples.yml
@@ -84,7 +84,7 @@ result:
     filename with spaces.yml
     .
 
-    11 samples executed in x.xx s (x.xx samples/s)
+    11 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
     M  examples.yml
@@ -102,7 +102,7 @@ result:
     filename with spaces.yml
     .
 
-    11 samples executed in x.xx s (x.xx samples/s)
+    11 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
   stderr: ''
