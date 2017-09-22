@@ -1,5 +1,6 @@
-personal_ws-1.1 en 24 
+personal_ws-1.1 en 26 
 NOREGTESTRC
+md
 dir
 Bugfix
 ostruct
@@ -22,4 +23,5 @@ Friedrich
 SCM
 regtestrc
 metatest
+README
 OpenStruct

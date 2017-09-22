@@ -1,4 +1,4 @@
-2.0.0.pre Major Release
+2.0.0 Major Release
 
 Incompatibilities to regtest 1.x
 1. The methods sample and combinations are not longer defined as instance
@@ -15,13 +15,18 @@ will not be loaded.
 A simple plugin mechanism is implemented and two plugins are part of regtest:
 regtest/colorize and regtest/git. Plugins are usual activated by require in
 one of the .regtestrc files.
+It is possible to change the exit codes for different return states of
+Regtest.check_results. This is done with changing Regtest.exit_codes see
+README.md for an example.
 
 Further Changes
-Reporting of statistics for writing files is removed because it's not useful.
-Now the full filename for results files are reported when running regtest.
+Reporting of statistics was reduced and the full filename for results files
+are now reported when running regtest.
 Some metatests are added.
 Version constant Regtest::VERSION is also added.
-A lot of internal refactoring and improving documentation.
+Regtest.sample returns now the hash with result information. This could be
+useful for plugins which overload this method.
+A lot of internal refactoring and improving documentation was done.
 
 
 1.1.0
