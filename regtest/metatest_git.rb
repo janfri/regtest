@@ -47,11 +47,11 @@ begin
     Dir.chdir tmpdir do
       execute 'git init'
       create_sample 'all new'
-      execute 'git add *.rb example.yml combinations.yml'
+      execute 'git add *.rb examples.yml combinations.yml'
       create_sample 'only one new'
-      example_rb = File.read('example.rb')
+      example_rb = File.read('examples.rb')
       example_rb << NEW_SAMPLE
-      File.write('example.rb', example_rb)
+      File.write('examples.rb', example_rb)
       create_sample 'one new one modified to index'
       execute 'git commit -m "commit"'
       create_sample 'one new one modified'

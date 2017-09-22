@@ -4,7 +4,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ..
     filename with spaces.yml
     .

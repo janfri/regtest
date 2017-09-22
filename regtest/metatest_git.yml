@@ -4,7 +4,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ..
     filename with spaces.yml
     .
@@ -13,7 +13,7 @@ result:
 
     There is at least one new sample result file.
     ?? combinations.yml
-    ?? example.yml
+    ?? examples.yml
     ?? filename with spaces.yml
   stderr: ''
   exitstatus: 1
@@ -23,7 +23,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ..
     filename with spaces.yml
     .
@@ -32,7 +32,7 @@ result:
 
     There is at least one new sample result file.
     A  combinations.yml
-    A  example.yml
+    A  examples.yml
     ?? filename with spaces.yml
   stderr: ''
   exitstatus: 1
@@ -42,7 +42,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ...
     filename with spaces.yml
     .
@@ -51,7 +51,7 @@ result:
 
     There are changes in your sample results!
     A  combinations.yml
-    AM example.yml
+    AM examples.yml
     ?? filename with spaces.yml
   stderr: ''
   exitstatus: 2
@@ -61,7 +61,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ...
     filename with spaces.yml
     .
@@ -69,7 +69,7 @@ result:
     10 samples executed in x.xx s (x.xx samples/s)
 
     There are changes in your sample results!
-     M example.yml
+     M examples.yml
     ?? filename with spaces.yml
   stderr: ''
   exitstatus: 2
@@ -79,7 +79,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ...
     filename with spaces.yml
     .
@@ -87,7 +87,7 @@ result:
     10 samples executed in x.xx s (x.xx samples/s)
 
     Looks good. :)
-    M  example.yml
+    M  examples.yml
     A  "filename with spaces.yml"
   stderr: ''
   exitstatus: 0
@@ -97,7 +97,7 @@ result:
   stdout: |
     combinations.yml
     ......
-    example.yml
+    examples.yml
     ...
     filename with spaces.yml
     .
