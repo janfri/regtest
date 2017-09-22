@@ -40,7 +40,7 @@ module Regtest
       end
       Regtest.results[output_filename] << h
       print '.'; $stdout.flush
-      name
+      h
     end
 
     # Build all combinations of a Hash-like object with arrays as values.
