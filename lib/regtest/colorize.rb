@@ -9,7 +9,8 @@ begin
     # (see https://rubygems.org/gems/colorize)
     module Colorize
 
-      @mapping = (%i(success fail unknown_result filename statistics).zip %i(green red yellow cyan default)).to_h
+      @mapping = (%i(success fail unknown_result filename).zip %i(green red yellow blue)).to_h
+      @mapping[:statistics] = {mode: :italic}
 
       class << self
         # Color mapping (all parameters of ColorizedString.colorize are supported
