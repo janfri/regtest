@@ -161,8 +161,8 @@ use git as your SCM:
 ```ruby
 require 'regtest/colorize'
 # adapt some colorizing if wanted
-Regtest::Colorize.mapping[:filename] = :blue
-Regtest::Colorize.mapping[:statistics] = {mode: :italic}
+Regtest::Colorize.mapping[:filename] = :cyan
+Regtest::Colorize.mapping[:statistics] = {color: :blue, mode: :italic}
 
 require 'regtest/git'
 ```
@@ -174,7 +174,8 @@ script is accordingly set. The standard values are: 0 for success, 1 for an
 unknown result (normally a new results file) and 2 for failure. If you use
 plain regtest without a SCM plugin the exit code is 1 (= unknown result).
 
-You can change the exit codes for the states with `Regtest.exit_codes` for example:
+You can change the exit codes for the states with `Regtest.exit_codes`. The
+following example changes the behaviour to the same as in regtest version 1.x.
 
 ```ruby
 Regtest.exit_codes[:unknown_result] = 0 
