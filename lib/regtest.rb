@@ -23,7 +23,7 @@ module Regtest
     attr_reader :exit_codes, :results, :start
 
     # Define a sample
-    def sample name, &_
+    def sample name
       h = {}
       name = name.to_s if name.kind_of?(Symbol)
       h['sample'] = name
