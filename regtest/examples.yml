@@ -4,3 +4,6 @@ result: some text
 ---
 sample: Division by zero
 exception: divided by 0
+---
+sample: no block
+exception: no block given (yield)

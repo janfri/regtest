@@ -15,3 +15,6 @@ Regtest.sample 'Division by zero' do
   # exception value for the sample.
   2 / 0
 end
+
+# If no block is given => exception no block given (yield)
+Regtest.sample 'no block'
