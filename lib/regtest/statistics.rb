@@ -8,9 +8,13 @@ begin
 
   module Regtest
 
+    @percentiles = []
+    @slow_sample_count = 0
     @statistics = []
 
     module Statistics
+
+      attr_accessor :percentiles, :slow_sample_count
 
       def sample name
         super name
@@ -37,7 +41,21 @@ begin
           report format("Median: %.2g s/sample", stats.median), type: :statistics
           report format("Standard deviation: %.2g s", stats.standard_deviation), type: :statistics
           report format("Relative standard deviation: %g", stats.relative_standard_deviation), type: :statistics
-          report format("\nSlowest sample: %p in file %p run %.2g s", sample_with_max_time.sample, sample_with_max_time.filename, sample_with_max_time.time), type: :statistics
+
+          percentiles = Array(Regtest.percentiles).map(&:to_i)
+          if percentiles.size > 0
+            report "\n"
+            percentiles.each do |per|
+              report format("%d%% percentile: %.2g s", per, stats.value_from_percentile(per)), type: :statistics
+            end
+          end
+
+          if Regtest.slow_sample_count > 0 && sample_count > Regtest.slow_sample_count
+            report format("\n%d slowest samples:", Regtest.slow_sample_count), type: :statistics
+            statistics.sort_by(&:time)[(-1 * Regtest.slow_sample_count)..-1].each do |stat|
+              report format("%p in file %p ran %.2g s", stat.sample, stat.filename, stat.time), type: :statistics
+            end
+          end
         end
         report format("\nTotal time: %.2f s", global_time), type: :statistics
         report format("Overhead: %.2f s", global_time - sample_time_total), type: :statistics
@@ -47,7 +65,7 @@ begin
     end
 
     class << self
-      attr_reader :statistics
+      attr_reader :statistics, :slow_sample_count, :percentiles
       prepend Statistics
     end
 
