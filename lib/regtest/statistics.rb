@@ -10,11 +10,10 @@ begin
 
     @percentiles = []
     @slow_sample_count = 0
+    @histogram_slots = 0
     @statistics = []
 
     module Statistics
-
-      attr_accessor :percentiles, :slow_sample_count
 
       def sample name
         super name
@@ -48,6 +47,46 @@ begin
             percentiles.each do |per|
               report format("%d%% percentile: %.2g s", per, stats.value_from_percentile(per)), type: :statistics
             end
+
+            percentile_values = percentiles.map {|p| stats.value_from_percentile(p)}.sort
+            max = stats.max
+            cols = ENV['COLUMNS'] || 80
+            dots = cols - percentiles.size - 2
+
+            unless dots < 0
+              plot = String.new('|')
+              last_v = 0
+              ([percentile_values] + [max]).flatten.each do |v|
+                delta = v - last_v
+                last_v = v
+                plot << ('-' * (dots / (max / delta.to_f)).round)
+                plot << '|'
+              end
+              report plot, type: :plot
+            end
+          end
+
+          if Regtest.histogram_slots > 0
+            limits = (1..Regtest.histogram_slots).map {|i| max / i}.reverse
+            hist = {}
+            limits.each {|s| hist[s] = 0}
+
+            stats.each do |s|
+              catch :next do
+                limits.each do |l|
+                  if s <= l
+                    hist[l] += 1
+                    throw :next
+                  end
+                end
+              end
+            end
+
+            scale = cols.to_f / stats.size
+            report "\n"
+            hist.each do |k, v|
+              report format("<= %.2g s: %s", k, 'o' * (v * scale).round), type: :plot
+            end
           end
 
           if Regtest.slow_sample_count > 0 && sample_count > Regtest.slow_sample_count
@@ -65,7 +104,9 @@ begin
     end
 
     class << self
-      attr_reader :statistics, :slow_sample_count, :percentiles
+      attr_reader :statistics
+      attr_accessor :histogram_slots, :percentiles, :slow_sample_count
+
       prepend Statistics
     end
 
