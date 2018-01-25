@@ -8,12 +8,18 @@ begin
 
   module Regtest
 
-    @percentiles = []
-    @slow_sample_count = 0
-    @histogram_slots = 0
-    @statistics = []
 
     module Statistics
+
+      @histogram_slots = 0
+      @percentiles = []
+      @slow_sample_count = 0
+      @statistics = []
+
+      class << self
+        attr_reader :statistics
+        attr_accessor :histogram_slots, :percentiles, :slow_sample_count
+      end
 
       def sample name
         super name
@@ -25,12 +31,13 @@ begin
         o.sample = name
         o.filename = determine_output_filename
         o.time = time
-        statistics << o
+        Statistics.statistics << o
       end
 
       def report_statistics
+        statistics = Statistics.statistics
         stats = DescriptiveStatistics::Stats.new(statistics.map(&:time))
-        sample_count = statistics.size
+        sample_count = stats.size
         sample_time_total = stats.sum
         sample_with_max_time = statistics.max_by(&:time)
         global_time = Time.now - Regtest.start
@@ -41,7 +48,7 @@ begin
           report format("Standard deviation: %.2g s", stats.standard_deviation), type: :statistics
           report format("Relative standard deviation: %g", stats.relative_standard_deviation), type: :statistics
 
-          percentiles = Array(Regtest.percentiles).map(&:to_i)
+          percentiles = Array(Statistics.percentiles).map(&:to_i)
           if percentiles.size > 0
             report "\n"
             percentiles.each do |per|
@@ -66,8 +73,9 @@ begin
             end
           end
 
-          if Regtest.histogram_slots > 0
-            limits = (1..Regtest.histogram_slots).map {|i| max / i}.reverse
+          histogram_slots = Statistics.histogram_slots
+          if histogram_slots > 0
+            limits = (1..Statistics.histogram_slots).map {|i| max / i}.reverse
             hist = {}
             limits.each {|s| hist[s] = 0}
 
@@ -85,13 +93,14 @@ begin
             scale = cols.to_f / stats.size
             report "\n"
             hist.each do |k, v|
-              report format("<= %.2g s: %s", k, 'o' * (v * scale).round), type: :plot
+              report format("<= %.2g s: %s", k, '=' * (v * scale).round), type: :plot
             end
           end
 
-          if Regtest.slow_sample_count > 0 && sample_count > Regtest.slow_sample_count
-            report format("\n%d slowest samples:", Regtest.slow_sample_count), type: :statistics
-            statistics.sort_by(&:time)[(-1 * Regtest.slow_sample_count)..-1].each do |stat|
+          slow_sample_count = Statistics.slow_sample_count
+          if slow_sample_count > 0 && sample_count > slow_sample_count
+            report format("\n%d slowest samples:", slow_sample_count), type: :statistics
+            statistics.sort_by(&:time)[(-1 * slow_sample_count)..-1].each do |stat|
               report format("%p in file %p ran %.2g s", stat.sample, stat.filename, stat.time), type: :statistics
             end
           end
@@ -104,9 +113,6 @@ begin
     end
 
     class << self
-      attr_reader :statistics
-      attr_accessor :histogram_slots, :percentiles, :slow_sample_count
-
       prepend Statistics
     end
 
