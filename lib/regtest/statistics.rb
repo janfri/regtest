@@ -43,10 +43,10 @@ begin
         global_time = Time.now - Regtest.start
         report format("\n\n%d samples executed in %.2f s", sample_count, sample_time_total), type: :statistics
         if sample_count > 1
-          report format("\nMean:   %.2g s/sample, %d samples/s", stats.mean, 1 / stats.mean), type: :statistics
-          report format("Median: %.2g s/sample", stats.median), type: :statistics
-          report format("Standard deviation: %.2g s", stats.standard_deviation), type: :statistics
-          report format("Relative standard deviation: %g", stats.relative_standard_deviation), type: :statistics
+          report format("\nMean:    %.2g s/sample, %d samples/s", stats.mean, 1 / stats.mean), type: :statistics
+          report format("Minimum: %.2g s", stats.min), type: :statistics
+          report format("Median:  %.2g s", stats.median), type: :statistics
+          report format("Maximum: %.2g s", stats.max), type: :statistics
 
           percentiles = Array(Statistics.percentiles).map(&:to_i)
           if percentiles.size > 0
