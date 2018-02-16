@@ -90,10 +90,13 @@ begin
               end
             end
 
-            scale = cols.to_f / stats.size
+            scale = (cols.to_f - 2) / stats.size
             report "\n"
+            report (hist.keys.map {|k| format('<= %.2g s', k)}.join(', ')), type: :statistics
             hist.each do |k, v|
-              report format("<= %.2g s: %s", k, '=' * (v * scale).round), type: :plot
+              bar = '+' * (v * scale).round
+              s = format('|%s%s|', bar, ' ' * (cols - 2 - bar.size))
+              report (s), type: :plot
             end
           end
 
