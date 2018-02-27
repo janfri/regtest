@@ -4,8 +4,6 @@
 require 'regtest'
 
 begin
-  require 'descriptive-statistics'
-
   module Regtest
 
 
@@ -20,6 +18,12 @@ begin
         attr_reader :statistics
         attr_accessor :histogram_slots, :percentiles, :slow_sample_count
       end
+
+      require 'descriptive-statistics'
+      # If loading of descriptive-statistics fails the accessor above is
+      # available in .regtestrc files but method redefinitions below and
+      # prepending of Statistics is skipped.
+
 
       def sample name
         super name
