@@ -1,6 +1,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
+require 'io/console'
 require 'regtest'
 
 begin
@@ -61,7 +62,7 @@ begin
 
             percentile_values = percentiles.map {|p| stats.value_from_percentile(p)}.sort
             max = stats.max
-            cols = ENV['COLUMNS'] || 80
+            cols = $stdout.respond_to?(:winsize) ? $stdout.winsize[1] : 80
             dots = cols - percentiles.size - 2
 
             unless dots < 0
