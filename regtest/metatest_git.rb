@@ -3,10 +3,11 @@
 
 # If git isn't available skip this file
 begin
+  require 'open3'
   Open3.capture2e('git --version')
 
   require 'fileutils'
-  require 'open3'
+  require 'regtest'
   require 'regtest/git'
   require 'tmpdir'
 
