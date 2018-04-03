@@ -7,7 +7,6 @@ require 'regtest'
 begin
   module Regtest
 
-
     module Statistics
 
       @histogram_slots = 0
@@ -26,8 +25,8 @@ begin
       # prepending of Statistics is skipped.
 
 
-      def sample name
-        super name
+      def sample name, &blk
+        super name, &blk
         sample_start = @last_sample_stop || Regtest.start
         sample_stop = Time.now
         time = sample_stop - sample_start
@@ -36,6 +35,7 @@ begin
         o.sample = name
         o.filename = determine_output_filename
         o.time = time
+        o.source_location = blk.source_location if blk
         Statistics.statistics << o
       end
 
@@ -113,6 +113,24 @@ begin
             end
           end
         end
+
+        stat_groups = statistics.group_by(&:source_location)
+        stat_groups.delete(nil)
+        if stat_groups.size > 1
+          report "\nTime for samples by source location"
+          sorted_stat_groups = stat_groups.map do |a|
+            k, v = a
+            [k.to_s, v.sum(&:time)]
+          end.sort_by(&:last).reverse
+          sorted_stat_groups.each do |a|
+            scale = a[1].to_f / sample_time_total
+            report format('%s: %.2g %% (%.2g s)', a[0], 100.0 * scale, a[1]), type: statistics
+            bar = '+' * ((cols - 2) * scale).round
+            space = ' ' * ((cols - 2) - bar.size)
+            report format('|%s%s|', bar, space), type: :plot
+          end
+        end
+
         report format("\nTotal time: %.2f s", global_time), type: :statistics
         report format("Overhead: %.2f s", global_time - sample_time_total), type: :statistics
 
