@@ -124,7 +124,12 @@ begin
           end.sort_by(&:last).reverse
           sorted_stat_groups.each do |a|
             scale = a[1].to_f / sample_time_total
-            report format('%s: %.2g %% (%.2g s)', a[0], 100.0 * scale, a[1]), type: statistics
+            a[0] =~ /^\["([^"]+)", (\d+)\]$/
+            sourcefilename, line = $1, $2
+            report format('%s:%d: %.2g %% (%.2g s)', sourcefilename, line, 100.0 * scale, a[1]), type: statistics
+          end
+          sorted_stat_groups.each do |a|
+            scale = a[1].to_f / sample_time_total
             bar = '+' * ((cols - 2) * scale).round
             space = ' ' * ((cols - 2) - bar.size)
             report format('|%s%s|', bar, space), type: :plot
