@@ -26,11 +26,10 @@ begin
 
 
       def sample name, &blk
+        sample_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         super name, &blk
-        sample_start = @last_sample_stop || Regtest.start
         sample_stop = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         time = sample_stop - sample_start
-        @last_sample_stop = sample_stop
         o = OpenStruct.new
         o.sample = name
         o.filename = determine_output_filename
@@ -44,7 +43,6 @@ begin
         stats = DescriptiveStatistics::Stats.new(statistics.map(&:time))
         sample_count = stats.size
         sample_time_total = stats.sum
-        sample_with_max_time = statistics.max_by(&:time)
         now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         global_time = now - Regtest.start
         report format("\n\n%d samples executed in %.2f s", sample_count, sample_time_total), type: :statistics
