@@ -28,7 +28,7 @@ begin
       def sample name, &blk
         super name, &blk
         sample_start = @last_sample_stop || Regtest.start
-        sample_stop = Time.now
+        sample_stop = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         time = sample_stop - sample_start
         @last_sample_stop = sample_stop
         o = OpenStruct.new
@@ -45,7 +45,8 @@ begin
         sample_count = stats.size
         sample_time_total = stats.sum
         sample_with_max_time = statistics.max_by(&:time)
-        global_time = Time.now - Regtest.start
+        now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        global_time = now - Regtest.start
         report format("\n\n%d samples executed in %.2f s", sample_count, sample_time_total), type: :statistics
         if sample_count > 1
           report format("\nMean:    %.2g s/sample, %d samples/s", stats.mean, 1 / stats.mean), type: :statistics
