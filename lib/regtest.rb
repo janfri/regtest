@@ -3,7 +3,7 @@
 #
 # Regtest - Simple Regression Testing With Ruby
 #
-# Copyright 2014, 2015, 2017 by Jan Friedrich <janfri26@gmail.com>
+# Copyright 2014, 2015, 2017, 2018 by Jan Friedrich <janfri26@gmail.com>
 # License: Regtest is licensed under the same terms as Ruby itself.
 #
 
@@ -13,7 +13,7 @@ require 'yaml'
 
 module Regtest
 
-  @start = Time.now
+  @start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   @results = {}
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
@@ -80,7 +80,8 @@ module Regtest
 
     # Report some statistics, could be overwritten by plugins.
     def report_statistics
-      time = Time.now - start
+      now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      time = now - start
       sample_count = results.values.map(&:size).reduce(0, &:+)
       report format("\n\n%d samples executed in %.2f s (%d samples/s)", sample_count, time, sample_count / time), type: :statistics
     end
