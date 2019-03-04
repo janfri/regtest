@@ -34,7 +34,6 @@ Rim.setup do |p|
   END
   p.homepage = 'https://github.com/janfri/regtest'
   p.ruby_version = '>=2.1.0'
-  p.dependencies << %w(colorize ~>0.8)
 end
 
 # JRuby does not support escaping of filenames with spaces in Open3.capture3
