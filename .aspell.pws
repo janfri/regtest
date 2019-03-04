@@ -1,4 +1,4 @@
-personal_ws-1.1 en 26 
+personal_ws-1.1 en 27 
 NOREGTESTRC
 md
 dir
@@ -25,3 +25,4 @@ regtestrc
 metatest
 README
 OpenStruct
+gettime

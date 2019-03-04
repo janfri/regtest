@@ -1,3 +1,8 @@
+2.1.0
+Use Process.clock_gettime for time measurements.
+Eliminate dependency to colorize gem. So Regtest has no longer any
+dependency.
+
 2.0.0 Major Release
 
 Incompatibilities to regtest 1.x
