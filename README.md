@@ -159,10 +159,10 @@ For example the following is a good default when you want colorized output and
 use git as your SCM:
 
 ```ruby
-require 'regtest/colorize'
+require 'regtest/colors'
 # adapt some colorizing if wanted
-Regtest::Colorize.mapping[:filename] = :cyan
-Regtest::Colorize.mapping[:statistics] = {color: :blue, mode: :italic}
+Regtest::Colors.mapping[:filename] = :cyan
+Regtest::Colors.mapping[:statistics] = %i(blue italic)
 
 require 'regtest/git'
 ```

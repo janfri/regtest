@@ -106,7 +106,7 @@ module Regtest
     end
 
     # Report text to output with possible type, could be overwritten
-    # by plugins e.g. regtest/colorize.
+    # by plugins e.g. regtest/colors.
     def report *args, type: nil
       puts *args
     end
