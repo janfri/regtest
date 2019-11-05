@@ -71,11 +71,33 @@ module Regtest
       res
     end
 
+    # Write (temporary) informations to a log file
+    def log s
+      if @log_filename != determine_log_filename || !@log_file
+        @log_filename = determine_log_filename
+        @log_file.close if @log_file
+        @log_file = File.open(determine_log_filename, 'w')
+      end
+      @log_file.puts s
+    end
+
+    # Determine the filename of the sample file
+    # with informations from caller
+    def determine_sample_filename
+      rest = caller.drop_while {|c| c !~ /in `sample'/}.drop_while {|c| c =~ /in `sample'/}
+      rest.first.split(/:\d+:/).first
+    end
+
     # Determine the filename of the ouput file (results file)
     # with informations from caller
     def determine_output_filename
-      rest = caller.drop_while {|c| c !~ /in `sample'/}.drop_while {|c| c =~ /in `sample'/}
-      rest.first.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
+      determine_sample_filename.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
+    end
+
+    # Determine the filename of the log file (for temporary outputs)
+    # with informations from caller
+    def determine_log_filename
+      determine_sample_filename.split(/:\d+:/).first.sub(/\.rb/, '') << '.log'
     end
 
     # Report some statistics, could be overwritten by plugins.
