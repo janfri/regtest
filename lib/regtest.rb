@@ -97,7 +97,7 @@ module Regtest
     # Determine the filename of the log file (for temporary outputs)
     # with informations from caller
     def determine_log_filename
-      determine_sample_filename.split(/:\d+:/).first.sub(/\.rb/, '') << '.log'
+      caller(2,1).first.split(/:\d+:/).first.sub(/\.rb/, '') << '.log'
     end
 
     # Report some statistics, could be overwritten by plugins.

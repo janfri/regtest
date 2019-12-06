@@ -10,3 +10,5 @@ Regtest.sample 'test' do
   Regtest.log b
   a < b
 end
+
+Regtest.log 'Logging from outside of a sample works.'
