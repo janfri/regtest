@@ -9,18 +9,20 @@
 
 require 'ostruct'
 require 'regtest/version'
+require 'set'
 require 'yaml'
 
 module Regtest
 
   @start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   @results = {}
+  @log_filenames = Set.new
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
 
   class << self
 
-    attr_reader :exit_codes, :results, :start
+    attr_reader :exit_codes, :log_filenames, :results, :start
 
     # Define a sample
     def sample name
@@ -73,12 +75,12 @@ module Regtest
 
     # Write (temporary) informations to a log file
     def log s
-      if @log_filename != determine_log_filename || !@log_file
-        @log_filename = determine_log_filename
-        @log_file.close if @log_file
-        @log_file = File.open(determine_log_filename, 'w')
+      log_filename = determine_log_filename
+      mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
+      Regtest.log_filenames << log_filename
+      File.open log_filename, mode do |f|
+        f.puts s
       end
-      @log_file.puts s
     end
 
     # Determine the filename of the sample file
