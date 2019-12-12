@@ -1,0 +1,28 @@
+---
+sample: Toplevel methods defined by 'extend Regtest'
+result:
+- combinations
+- log
+- sample
+---
+sample: sample works at toplevel
+result: true
+---
+sample: metatest
+result:
+  sample: sample works at toplevel
+  result: true
+---
+sample: combinations work at toplevel
+result:
+- :x: a
+  :y: 1
+- :x: a
+  :y: 2
+- :x: b
+  :y: 1
+- :x: b
+  :y: 2
+---
+sample: log works at toplevel
+result: true

@@ -10,14 +10,17 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    11 samples executed in x.xx s (x samples/s)
+    16 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     ?? combinations.yml
     ?? examples.yml
     ?? filename with spaces.yml
     ?? log.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 1
 ---
@@ -32,14 +35,17 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    11 samples executed in x.xx s (x samples/s)
+    16 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     A  combinations.yml
     A  examples.yml
     ?? filename with spaces.yml
     ?? log.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 1
 ---
@@ -54,14 +60,17 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    12 samples executed in x.xx s (x samples/s)
+    17 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
     A  combinations.yml
     AM examples.yml
     ?? filename with spaces.yml
     ?? log.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 2
 ---
@@ -76,13 +85,16 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    12 samples executed in x.xx s (x samples/s)
+    17 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
      M examples.yml
     ?? filename with spaces.yml
     ?? log.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 2
 ---
@@ -97,13 +109,16 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    12 samples executed in x.xx s (x samples/s)
+    17 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
     M  examples.yml
     A  "filename with spaces.yml"
     A  log.yml
+    A  toplevel.yml
   stderr: ''
   exitstatus: 0
 ---
@@ -118,8 +133,10 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    12 samples executed in x.xx s (x samples/s)
+    17 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
   stderr: ''

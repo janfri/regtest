@@ -10,8 +10,10 @@ result:
     .
     log.yml
     .
+    toplevel.yml
+    .....
 
-    11 samples executed in x.xx s (x samples/s)
+    16 samples executed in x.xx s (x samples/s)
 
     Please check result files manually. Regtest isn't able to do that.
   stderr: ''

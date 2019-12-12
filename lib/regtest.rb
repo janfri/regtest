@@ -14,74 +14,76 @@ require 'yaml'
 
 module Regtest
 
+  extend self
+
   @start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   @results = {}
   @log_filenames = Set.new
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
 
+  # Define a sample
+  def sample name
+    h = {}
+    name = name.to_s if name.kind_of?(Symbol)
+    h['sample'] = name
+    begin
+      h['result'] = yield
+    rescue Exception => e
+      h['exception'] = e.message
+    end
+    output_filename = Regtest.determine_filename_from_caller caller(1, 1), '.yml'
+    unless Regtest.results[output_filename]
+      Regtest.report "\n", type: :filename unless Regtest.results.empty?
+      Regtest.report output_filename, type: :filename
+      Regtest.results[output_filename] = []
+    end
+    Regtest.results[output_filename] << h
+    print '.'; $stdout.flush
+    h
+  end
+
+  # Build all combinations of a Hash-like object with arrays as values.
+  # Return value is an array of OpenStruct instances.
+  #
+  # Example:
+  #   require 'ostruct'
+  #   require 'regtest'
+  #
+  #   o = OpenStruct.new
+  #   o.a = [1,2,3]
+  #   o.b = [:x, :y]
+  #   Regtest.combinations(o)
+  #   # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
+  #   #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
+  #   #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
+  def combinations hashy
+    h = hashy.to_h
+    a = h.values[0].product(*h.values[1..-1])
+    res = []
+    a.each do |e|
+      o = OpenStruct.new
+      h.keys.zip(e) do |k, v|
+        o[k] = v
+      end
+      res << o
+    end
+    res
+  end
+
+  # Write (temporary) informations to a log file
+  def log s
+    log_filename = Regtest.determine_filename_from_caller caller(1, 1), '.log'
+    mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
+    Regtest.log_filenames << log_filename
+    File.open log_filename, mode do |f|
+      f.puts s
+    end
+  end
+
   class << self
 
     attr_reader :exit_codes, :log_filenames, :results, :start
-
-    # Define a sample
-    def sample name
-      h = {}
-      name = name.to_s if name.kind_of?(Symbol)
-      h['sample'] = name
-      begin
-        h['result'] = yield
-      rescue Exception => e
-        h['exception'] = e.message
-      end
-      output_filename = determine_filename_from_caller caller(1, 1), '.yml'
-      unless Regtest.results[output_filename]
-        Regtest.report "\n", type: :filename unless Regtest.results.empty?
-        Regtest.report output_filename, type: :filename
-        Regtest.results[output_filename] = []
-      end
-      Regtest.results[output_filename] << h
-      print '.'; $stdout.flush
-      h
-    end
-
-    # Build all combinations of a Hash-like object with arrays as values.
-    # Return value is an array of OpenStruct instances.
-    #
-    # Example:
-    #   require 'ostruct'
-    #   require 'regtest'
-    #
-    #   o = OpenStruct.new
-    #   o.a = [1,2,3]
-    #   o.b = [:x, :y]
-    #   Regtest.combinations(o)
-    #   # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
-    #   #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
-    #   #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
-    def combinations hashy
-      h = hashy.to_h
-      a = h.values[0].product(*h.values[1..-1])
-      res = []
-      a.each do |e|
-        o = OpenStruct.new
-        h.keys.zip(e) do |k, v|
-          o[k] = v
-        end
-        res << o
-      end
-      res
-    end
-
-    # Write (temporary) informations to a log file
-    def log s
-      log_filename = determine_filename_from_caller caller(1, 1), '.log'
-      mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
-      Regtest.log_filenames << log_filename
-      File.open log_filename, mode do |f|
-        f.puts s
-      end
-    end
 
     # Determine a filename with informations from caller
     # @param c caller (i.e. caller(1, 1))
