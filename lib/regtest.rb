@@ -32,7 +32,7 @@ module Regtest
     rescue Exception => e
       h['exception'] = e.message
     end
-    output_filename = Regtest.determine_filename_from_caller caller(1, 1), '.yml'
+    output_filename = Regtest.determine_filename_from_caller('.yml')
     unless Regtest.results[output_filename]
       Regtest.report "\n", type: :filename unless Regtest.results.empty?
       Regtest.report output_filename, type: :filename
@@ -73,7 +73,7 @@ module Regtest
 
   # Write (temporary) informations to a log file
   def log s
-    log_filename = Regtest.determine_filename_from_caller caller(1, 1), '.log'
+    log_filename = Regtest.determine_filename_from_caller('.log')
     mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
     Regtest.log_filenames << log_filename
     File.open log_filename, mode do |f|
@@ -85,11 +85,14 @@ module Regtest
 
     attr_reader :exit_codes, :log_filenames, :results, :start
 
-    # Determine a filename with informations from caller
-    # @param c caller (i.e. caller(1, 1))
+    # Determine a filename which is derived from the filename of the "real"
+    # caller of the calling method
     # @param ext new extension (i.e. '.yml')
-    def determine_filename_from_caller c, ext
-      c.first.split(/:\d+:/).first.sub(/\.rb$/, '') << ext.to_s
+    def determine_filename_from_caller ext
+      cls = caller_locations
+      base_label = cls.first.base_label
+      cls = cls.drop_while {|cl| cl.base_label == base_label}
+      cls.first.path.sub(/\.rb$/, '') << ext.to_s
     end
 
     # Report some statistics, could be overwritten by plugins.
