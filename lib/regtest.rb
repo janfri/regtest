@@ -9,95 +9,90 @@
 
 require 'ostruct'
 require 'regtest/version'
+require 'set'
 require 'yaml'
 
 module Regtest
 
+  extend self
+
   @start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   @results = {}
+  @log_filenames = Set.new
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
 
+  # Define a sample
+  def sample name
+    h = {}
+    name = name.to_s if name.kind_of?(Symbol)
+    h['sample'] = name
+    begin
+      h['result'] = yield
+    rescue Exception => e
+      h['exception'] = e.message
+    end
+    output_filename = Regtest.determine_filename_from_caller('.yml')
+    unless Regtest.results[output_filename]
+      Regtest.report "\n", type: :filename unless Regtest.results.empty?
+      Regtest.report output_filename, type: :filename
+      Regtest.results[output_filename] = []
+    end
+    Regtest.results[output_filename] << h
+    print '.'; $stdout.flush
+    h
+  end
+
+  # Build all combinations of a Hash-like object with arrays as values.
+  # Return value is an array of OpenStruct instances.
+  #
+  # Example:
+  #   require 'ostruct'
+  #   require 'regtest'
+  #
+  #   o = OpenStruct.new
+  #   o.a = [1,2,3]
+  #   o.b = [:x, :y]
+  #   Regtest.combinations(o)
+  #   # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
+  #   #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
+  #   #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
+  def combinations hashy
+    h = hashy.to_h
+    a = h.values[0].product(*h.values[1..-1])
+    res = []
+    a.each do |e|
+      o = OpenStruct.new
+      h.keys.zip(e) do |k, v|
+        o[k] = v
+      end
+      res << o
+    end
+    res
+  end
+
+  # Write (temporary) informations to a log file
+  def log s
+    log_filename = Regtest.determine_filename_from_caller('.log')
+    mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
+    Regtest.log_filenames << log_filename
+    File.open log_filename, mode do |f|
+      f.puts s
+    end
+  end
+
   class << self
 
-    attr_reader :exit_codes, :results, :start
+    attr_reader :exit_codes, :log_filenames, :results, :start
 
-    # Define a sample
-    def sample name
-      h = {}
-      name = name.to_s if name.kind_of?(Symbol)
-      h['sample'] = name
-      begin
-        h['result'] = yield
-      rescue Exception => e
-        h['exception'] = e.message
-      end
-      output_filename = determine_output_filename
-      unless Regtest.results[output_filename]
-        Regtest.report "\n", type: :filename unless Regtest.results.empty?
-        Regtest.report output_filename, type: :filename
-        Regtest.results[output_filename] = []
-      end
-      Regtest.results[output_filename] << h
-      print '.'; $stdout.flush
-      h
-    end
-
-    # Build all combinations of a Hash-like object with arrays as values.
-    # Return value is an array of OpenStruct instances.
-    #
-    # Example:
-    #   require 'ostruct'
-    #   require 'regtest'
-    #
-    #   o = OpenStruct.new
-    #   o.a = [1,2,3]
-    #   o.b = [:x, :y]
-    #   Regtest.combinations(o)
-    #   # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
-    #   #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
-    #   #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
-    def combinations hashy
-      h = hashy.to_h
-      a = h.values[0].product(*h.values[1..-1])
-      res = []
-      a.each do |e|
-        o = OpenStruct.new
-        h.keys.zip(e) do |k, v|
-          o[k] = v
-        end
-        res << o
-      end
-      res
-    end
-
-    # Write (temporary) informations to a log file
-    def log s
-      if @log_filename != determine_log_filename || !@log_file
-        @log_filename = determine_log_filename
-        @log_file.close if @log_file
-        @log_file = File.open(determine_log_filename, 'w')
-      end
-      @log_file.puts s
-    end
-
-    # Determine the filename of the sample file
-    # with informations from caller
-    def determine_sample_filename
-      rest = caller.drop_while {|c| c !~ /in `sample'/}.drop_while {|c| c =~ /in `sample'/}
-      rest.first.split(/:\d+:/).first
-    end
-
-    # Determine the filename of the ouput file (results file)
-    # with informations from caller
-    def determine_output_filename
-      determine_sample_filename.split(/:\d+:/).first.sub(/\.rb/, '') << '.yml'
-    end
-
-    # Determine the filename of the log file (for temporary outputs)
-    # with informations from caller
-    def determine_log_filename
-      caller(2,1).first.split(/:\d+:/).first.sub(/\.rb/, '') << '.log'
+    # Determine a filename which is derived from the filename of the "real"
+    # caller of the calling method
+    # @param ext new extension (i.e. '.yml')
+    def determine_filename_from_caller ext
+      cls = caller_locations
+      base_label = cls.first.base_label
+      cls = cls.drop_while {|cl| cl.base_label == base_label}
+      cls.first.path.sub(/\.rb$/, '') << ext.to_s
     end
 
     # Report some statistics, could be overwritten by plugins.

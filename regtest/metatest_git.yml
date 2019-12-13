@@ -12,8 +12,10 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    22 samples executed in x.xx s (x samples/s)
+    27 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     ?? combinations.yml
@@ -21,6 +23,7 @@ result:
     ?? filename with spaces.yml
     ?? log.yml
     ?? slow_samples.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 1
 ---
@@ -37,8 +40,10 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    22 samples executed in x.xx s (x samples/s)
+    27 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     A  combinations.yml
@@ -46,6 +51,7 @@ result:
     ?? filename with spaces.yml
     ?? log.yml
     ?? slow_samples.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 1
 ---
@@ -62,8 +68,10 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    23 samples executed in x.xx s (x samples/s)
+    28 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
     A  combinations.yml
@@ -71,6 +79,7 @@ result:
     ?? filename with spaces.yml
     ?? log.yml
     ?? slow_samples.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 2
 ---
@@ -87,14 +96,17 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    23 samples executed in x.xx s (x samples/s)
+    28 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
      M examples.yml
     ?? filename with spaces.yml
     ?? log.yml
     ?? slow_samples.yml
+    ?? toplevel.yml
   stderr: ''
   exitstatus: 2
 ---
@@ -111,14 +123,17 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    23 samples executed in x.xx s (x samples/s)
+    28 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
     M  examples.yml
     A  "filename with spaces.yml"
     A  log.yml
     A  slow_samples.yml
+    A  toplevel.yml
   stderr: ''
   exitstatus: 0
 ---
@@ -135,8 +150,10 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    23 samples executed in x.xx s (x samples/s)
+    28 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
   stderr: ''

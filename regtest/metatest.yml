@@ -12,8 +12,10 @@ result:
     .
     slow_samples.yml
     ...........
+    toplevel.yml
+    .....
 
-    22 samples executed in x.xx s (x samples/s)
+    27 samples executed in x.xx s (x samples/s)
 
     Please check result files manually. Regtest isn't able to do that.
   stderr: ''

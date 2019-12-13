@@ -33,7 +33,7 @@ begin
         @last_sample_stop = sample_stop
         o = OpenStruct.new
         o.sample = name
-        o.filename = determine_output_filename
+        o.filename = Regtest.determine_filename_from_caller('.yml')
         o.time = time
         o.source_location = blk.source_location if blk
         Statistics.statistics << o
