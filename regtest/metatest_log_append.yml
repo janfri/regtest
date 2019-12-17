@@ -1,0 +1,18 @@
+---
+sample: first log entry appends to file
+result:
+- initial line
+- first log entry
+---
+sample: second log entry appends to file
+result:
+- initial line
+- first log entry
+- second log entry
+---
+sample: third log entry appends to file
+result:
+- initial line
+- first log entry
+- second log entry
+- first log entry
