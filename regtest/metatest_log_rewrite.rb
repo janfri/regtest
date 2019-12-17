@@ -13,7 +13,7 @@ File.open($log_filename, 'w') do |f|
 end
 
 def lines_of_log_file
-  File.readlines($log_filename, chomp: true)
+  File.readlines($log_filename).map(&:chomp) # keyword chomp is not supported by Ruby versions < 2.4
 end
 
 Regtest.sample 'first log entry rewrites log file' do
