@@ -1,0 +1,12 @@
+---
+sample: first log entry rewrites log file
+result:
+- first log entry
+---
+sample: second log entry rewrites log file
+result:
+- second log entry
+---
+sample: third log entry rewrites log file
+result:
+- third log entry

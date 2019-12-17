@@ -72,9 +72,20 @@ module Regtest
   end
 
   # Write (temporary) informations to a log file
-  def log s
+  # By default the log file is truncated at the first call of Regtest.log for
+  # each run of regtest, and all following calls appends to the log file. So
+  # you have a log for one run of regtest. You can use mode ('a' or 'w') to
+  # change this behaviour for each call of Regtest.log.
+  def log s, mode: nil
     log_filename = Regtest.determine_filename_from_caller('.log')
-    mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
+    case mode
+    when nil
+      mode = Regtest.log_filenames.include?(log_filename) ? 'a' : 'w'
+    when 'a', 'w'
+      # ok
+    else
+      raise ArgumentError.new("Mode #{mode} is not allowed.")
+    end
     Regtest.log_filenames << log_filename
     File.open log_filename, mode do |f|
       f.puts s
