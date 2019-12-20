@@ -168,7 +168,7 @@ complete log for each run. But this behaviour could be changed with the
 Regtest.log RUBY_VERSION
 
 def create_record **values
-  # do stuff to create the record and return th id of the generated record
+  # do stuff to create the record and return the id of the generated record
 end
 
 def delete_record id
@@ -191,7 +191,7 @@ end
 ```
 
 If you want to have a log that is not truncated at each run of regtest, you can
-use ```mode: 'a'```at the first call of ```Regtest.log``` in the correspondig
+use ```mode: 'a'```at the first call of ```Regtest.log``` in the corresponding
 ruby script.
 
 ```ruby
@@ -210,13 +210,14 @@ ary.each do |e|
   if t > max_time
     max_time = t
     Regtest.log max_time, mode: 'w'
-    # the content of the correspondig log file is now one line with max_time
+    # the content of the corresponding log file is now one line with max_time
   end
 end
 ```
 
-Because the logfiles contains only temporary tuff they should normally not
+Because the log files contains only temporary stuff they should normally not
 checked in the SCM.
+
 
 ## Configuration and Plugins
 
