@@ -1,3 +1,10 @@
+2.2.0
+Add a new method Regtest.log to allow the logging of temporary values which
+could be of interest for different reasons (i. e. debugging).
+With this version you can use `extend Regtest` to have the methods sample, log
+and combinations as top level methods. This is experimental and therefore not
+yet mentioned at README.
+
 2.1.1
 Adapt remaining examples of regtest/colorize to regtest/colors.
 

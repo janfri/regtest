@@ -4,5 +4,5 @@
 require 'regtest'
 
 # If a Ruby file doesn't contain any sample regtest shouldn't
-# generate a correspondig YAML file.
+# generate a corresponding YAML file.
 2 + 2
