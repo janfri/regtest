@@ -297,6 +297,13 @@ The code is hosted on [github](https://github.com/janfri/regtest) and
 [bitbucket](https://bitbucket.org/janfri/regtest) Change it to your needs.
 Release a fork. It is open source.
 
+
+## Versioning
+
+Regtest follows [Semantic Versioning](https://semver.org/), both SemVer and
+SemVerTag.
+
+
 ## Author
 
 Jan Friedrich <janfri26@gmail.com>
