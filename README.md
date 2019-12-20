@@ -146,6 +146,78 @@ older runs of the samples is done by your SCM. So the sample files and their
 corresponding results files should be taken under version control.
 
 
+## Logging
+
+The key idea behind regtest is to produce values that are invariant and check
+if this assumption is true at another (mostly later) state of code. But often
+there are temporary or specific values which changes or could change at each
+run of regtest. This could be for example an id for a created record or the
+version of a used external service or some time-relevant values. Sometimes it
+is be useful, to know the actual value of one of these.
+
+In such cases the method ```Regtest.log``` could be handy. It writes a line of
+the given object to a log file which is named with the same name as the calling
+Ruby script but has as extension ```.log```. It could be called inside as well
+as outside of a regtest sample. Per default this file is overwritten by the
+first call of ```Regtest.log``` of each run of regtest and per file. And each
+further call of ```Regtest.log``` appends then to the file.  So you get a
+complete log for each run. But this behaviour could be changed with the
+```mode``` keyword arg of the method. Let's see an example:
+
+```ruby
+Regtest.log RUBY_VERSION
+
+def create_record **values
+  # do stuff to create the record and return th id of the generated record
+end
+
+def delete_record id
+  # delete an existing record or raise an exception if record with id doesn't
+  # exists
+end
+
+Regtest.sample 'create a record and delete it' do
+  id = create_record language: 'Ruby', creator: 'Matz'
+  Regtest.log "generated record with id #{id}"
+  delete_record id
+  # the generated id should not be part of the result, because it changes every
+  # time you create a new record
+  'Record created and deleted'
+end
+
+Regtest.sample 'try to delete a non existing record' do
+  delete_record -1
+end
+```
+
+If you want to have a log that is not truncated at each run of regtest, you can
+use ```mode: 'a'```at the first call of ```Regtest.log``` in the correspondig
+ruby script.
+
+```ruby
+# ...
+# the first call of Regtest.log in this Ruby file
+Regtest.log Time.now, mode: 'a'
+```
+
+On the other hand, you can use ```mode: 'w'``` to truncate the log file even at
+a later call of ```Regtest.log```.
+
+```ruby
+max_time = 0
+ary.each do |e|
+  t = get_time_to_do_some_stuff
+  if t > max_time
+    max_time = t
+    Regtest.log max_time, mode: 'w'
+    # the content of the correspondig log file is now one line with max_time
+  end
+end
+```
+
+Because the logfiles contains only temporary tuff they should normally not
+checked in the SCM.
+
 ## Configuration and Plugins
 
 You can adapt the behaviour of regtest with plugins. To configure this and
