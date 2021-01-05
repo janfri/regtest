@@ -153,7 +153,7 @@ if this assumption is true at another (mostly later) state of code. But often
 there are temporary or specific values which changes or could change at each
 run of regtest. This could be for example an id for a created record or the
 version of a used external service or some time-relevant values. Sometimes it
-is be useful, to know the actual value of one of these.
+is useful, to know the actual value of one of these.
 
 In such cases the method ```Regtest.log``` could be handy. It writes a line of
 the given object to a log file which is named with the same name as the calling
