@@ -22,7 +22,7 @@ result:
     There is at least one new sample result file.
     ?? combinations.yml
     ?? examples.yml
-    ?? filename with spaces.yml
+    ?? "filename with spaces.yml"
     ?? log.yml
     ?? log_append.yml
     ?? log_rewrite.yml
@@ -53,7 +53,7 @@ result:
     There is at least one new sample result file.
     A  combinations.yml
     A  examples.yml
-    ?? filename with spaces.yml
+    ?? "filename with spaces.yml"
     ?? log.yml
     ?? log_append.yml
     ?? log_rewrite.yml
@@ -84,7 +84,7 @@ result:
     There are changes in your sample results!
     A  combinations.yml
     AM examples.yml
-    ?? filename with spaces.yml
+    ?? "filename with spaces.yml"
     ?? log.yml
     ?? log_append.yml
     ?? log_rewrite.yml
@@ -114,7 +114,7 @@ result:
 
     There are changes in your sample results!
      M examples.yml
-    ?? filename with spaces.yml
+    ?? "filename with spaces.yml"
     ?? log.yml
     ?? log_append.yml
     ?? log_rewrite.yml

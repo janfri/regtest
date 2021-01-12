@@ -21,6 +21,7 @@ begin
       # Levelling out runtime specific differences.
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
       res['stdout'].gsub!(%r(\d+ samples/s), 'x samples/s')
+      res['stdout'].gsub!(/^\?\? filename with spaces.yml$/m, '?? "filename with spaces.yml"')
       res['exitstatus'] = ps.exitstatus
       res
     end
