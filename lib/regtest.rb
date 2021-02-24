@@ -100,10 +100,7 @@ module Regtest
     # caller of the calling method
     # @param ext new extension (i.e. '.yml')
     def determine_filename_from_caller ext
-      cls = caller_locations
-      base_label = cls.first.base_label
-      cls = cls.drop_while {|cl| cl.base_label == base_label}
-      cls.first.path.sub(/\.rb$/, '') << ext.to_s
+      caller_locations(2, 1).first.path.sub(/\.rb$/, '') << ext.to_s
     end
 
     # Report some statistics, could be overwritten by plugins.
