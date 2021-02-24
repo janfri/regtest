@@ -1,3 +1,6 @@
 ---
 sample: test
 result: true
+---
+sample: invalid mode
+exception: Mode x is not allowed.

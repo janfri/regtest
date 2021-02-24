@@ -11,4 +11,8 @@ Regtest.sample 'test' do
   a < b
 end
 
+Regtest.sample 'invalid mode' do
+  Regtest.log 'foo', mode: 'x'
+end
+
 Regtest.log 'Logging from outside of a sample works.'
