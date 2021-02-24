@@ -84,7 +84,7 @@ module Regtest
     when 'a', 'w'
       # ok
     else
-      raise ArgumentError.new("Mode #{mode} is not allowed.")
+      raise ArgumentError.new(format('Mode %s is not allowed.', mode))
     end
     Regtest.log_filenames << log_filename
     File.open log_filename, mode do |f|
