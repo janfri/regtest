@@ -3,6 +3,8 @@
 
 require 'regtest'
 
+$yml_filename = __FILE__.sub(/\.rb$/, '.yml')
+
 Regtest.sample 'spaces in filenames' do
-  "If you can read this in the results file #{File.basename(__FILE__.sub(/\.rb/, '.yml')).inspect} then regtest can handle filenames with spaces. :)"
+  format('If you can read this in the results file "%s" then regtest can handle filenames with spaces. :)', File.basename($yml_filename))
 end
