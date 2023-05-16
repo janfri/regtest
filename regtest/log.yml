@@ -1,6 +1,14 @@
 ---
-sample: test
-result: true
+sample: logging inside of a sample
+result:
+- "#.#"
+- "#.#"
 ---
 sample: invalid mode
 exception: Mode x is not allowed.
+---
+sample: check final log file
+result:
+- "#.#"
+- "#.#"
+- Logging from outside of a sample works.

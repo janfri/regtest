@@ -9,7 +9,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -17,7 +17,7 @@ result:
     toplevel.yml
     .....
 
-    23 samples executed in x.xx s (x samples/s)
+    24 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     ?? combinations.yml
@@ -40,7 +40,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -48,7 +48,7 @@ result:
     toplevel.yml
     .....
 
-    23 samples executed in x.xx s (x samples/s)
+    24 samples executed in x.xx s (x samples/s)
 
     There is at least one new sample result file.
     A  combinations.yml
@@ -71,7 +71,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -79,7 +79,7 @@ result:
     toplevel.yml
     .....
 
-    24 samples executed in x.xx s (x samples/s)
+    25 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
     A  combinations.yml
@@ -102,7 +102,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -110,7 +110,7 @@ result:
     toplevel.yml
     .....
 
-    24 samples executed in x.xx s (x samples/s)
+    25 samples executed in x.xx s (x samples/s)
 
     There are changes in your sample results!
      M examples.yml
@@ -132,7 +132,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -140,7 +140,7 @@ result:
     toplevel.yml
     .....
 
-    24 samples executed in x.xx s (x samples/s)
+    25 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
     M  examples.yml
@@ -162,7 +162,7 @@ result:
     filename with spaces.yml
     .
     log.yml
-    ..
+    ...
     log_append.yml
     ...
     log_rewrite.yml
@@ -170,7 +170,7 @@ result:
     toplevel.yml
     .....
 
-    24 samples executed in x.xx s (x samples/s)
+    25 samples executed in x.xx s (x samples/s)
 
     Looks good. :)
   stderr: ''

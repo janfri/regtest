@@ -3,12 +3,18 @@
 
 require 'regtest'
 
-Regtest.sample 'test' do
+$log_filename = __FILE__.sub(/\.rb$/, '.log')
+
+def cleaned_lines_of_log_file
+  File.readlines($log_filename).map {|l| l.chomp.gsub(/\d+/, '#')}
+end
+
+Regtest.sample 'logging inside of a sample' do
   a = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   Regtest.log a
   b = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   Regtest.log b
-  a < b
+  cleaned_lines_of_log_file
 end
 
 Regtest.sample 'invalid mode' do
@@ -16,3 +22,7 @@ Regtest.sample 'invalid mode' do
 end
 
 Regtest.log 'Logging from outside of a sample works.'
+
+Regtest.sample 'check final log file' do
+  cleaned_lines_of_log_file
+end
