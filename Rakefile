@@ -42,5 +42,13 @@ if RUBY_ENGINE == 'jruby'
   REGTEST_FILES_RB.reject! {|fn| fn =~ /metatest/}
 end
 
+task :before_regtest do
+  verbose false do
+    rm_rf 'regtest/*.log'
+    rm_rf 'regtest/*.yml'
+  end
+end
+
+task :regtest => :before_regtest
 task :test => :regtest
 task :default => :test
