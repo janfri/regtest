@@ -27,6 +27,6 @@ Regtest.sample 'second log entry appends to file' do
 end
 
 Regtest.sample 'third log entry appends to file' do
-  Regtest.log 'first log entry', mode: 'a'
+  Regtest.log 'third log entry', mode: 'a'
   lines_of_log_file
 end
