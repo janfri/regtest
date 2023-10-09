@@ -1,0 +1,29 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version:
+          - '3.0'
+          - '3.1'
+          - '3.2'
+          - ruby-head
+          - jruby-head
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+      - name: Install Dependencies
+        run: |
+          bundle install
+      - name: Prepare .regtestrc
+        run: |
+          echo "require 'regtest/git'; require 'regtest/colors'" > .regtestrc
+      - name: Run Tests
+        run: |
+          rake
