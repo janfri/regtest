@@ -24,3 +24,6 @@ jobs:
       - name: Run Tests
         run: |
           rake
+      - name: Show Results (for Debugging)
+        run: |
+          cat regtest/metatest_git.yml
