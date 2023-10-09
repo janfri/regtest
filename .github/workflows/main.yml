@@ -14,7 +14,6 @@ jobs:
           - jruby-head
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-gitversion@v1.0.0
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -22,9 +21,6 @@ jobs:
       - name: Install Dependencies
         run: |
           bundle install
-      - name: Prepare .regtestrc
-        run: |
-          echo "require 'regtest/git'; require 'regtest/colors'" > .regtestrc
       - name: Run Tests
         run: |
           rake
