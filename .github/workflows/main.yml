@@ -23,4 +23,4 @@ jobs:
           gem install rim
       - name: Run Tests
         run: |
-          ruby regtest/combinations.rb regtest/examples.rb regtest/filename\ with\ spaces.rb regtest/log.rb regtest/log_append.rb regtest/log_rewrite.rb regtest/metatest.rb regtest/no_samples.rb regtest/toplevel.rb
+          ruby -I lib regtest/combinations.rb regtest/examples.rb regtest/filename\ with\ spaces.rb regtest/log.rb regtest/log_append.rb regtest/log_rewrite.rb regtest/metatest.rb regtest/no_samples.rb regtest/toplevel.rb
