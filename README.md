@@ -54,7 +54,7 @@ require 'regtest'
 
 Regtest.sample 'String result' do
   # Doing something to get the result of the sample
-  # end make sure it is the result of the block
+  # and ensure it is the result of the block
   'some text'
 end
 
@@ -151,7 +151,7 @@ corresponding results files should be taken under version control.
 The key idea behind regtest is to produce values that are invariant and check
 if this assumption is true at another (mostly later) state of code. But often
 there are temporary or specific values which changes or could change at each
-run of regtest. This could be for example an id for a created record or the
+run of regtest. This could be for example an id of a created record or the
 version of a used external service or some time-relevant values. Sometimes it
 is useful, to know the actual value of one of these.
 
