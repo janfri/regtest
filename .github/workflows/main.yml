@@ -21,6 +21,9 @@ jobs:
       - name: Install Dependencies
         run: |
           gem install rim
+      - name: Generate .regtestrc
+        run: |
+          echo "require 'regtest/git'" > .regtestrc
       - name: Run Tests
         run: |
           ruby -I lib regtest/combinations.rb regtest/examples.rb regtest/filename\ with\ spaces.rb regtest/log.rb regtest/log_append.rb regtest/log_rewrite.rb regtest/metatest.rb regtest/no_samples.rb regtest/toplevel.rb
