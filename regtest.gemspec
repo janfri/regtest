@@ -12,27 +12,18 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Jan Friedrich"]
-  s.date = "2021-02-24"
+  s.date = "2023-11-17"
   s.description = "This library supports a very simple way to do regression testing with Ruby. It\nis not limited to Ruby projects you can use it also in other contexts where you\ncan extract data with Ruby.\n\nYou write Ruby scripts with samples. Run these and get the sample results as\nresults files besides your scripts. Check both the scripts and the results\nfiles in you Source Code Management System (SCM). When you run the scrips on a\nlater (or even previous) version of your code a simple diff show you if and how\nthe changes in your code or environment impact the results of your samples.\n\nThis is not a replacement for unit testing but a complement: You can produce a\nlot of samples with a small amount of Ruby code (e.g. a large number of\ncombinations of data).\n"
   s.email = "janfri26@gmail.com"
-  s.files = ["./.aspell.pws", "Changelog", "Gemfile", "LICENSE", "README.md", "Rakefile", "lib/regtest", "lib/regtest.rb", "lib/regtest/colorize.rb", "lib/regtest/colors.rb", "lib/regtest/git.rb", "lib/regtest/task.rb", "lib/regtest/version.rb", "regtest.gemspec", "regtest/combinations.rb", "regtest/combinations.yml", "regtest/examples.rb", "regtest/examples.yml", "regtest/filename with spaces.rb", "regtest/filename with spaces.yml", "regtest/log.log", "regtest/log.rb", "regtest/log.yml", "regtest/log_append.log", "regtest/log_append.rb", "regtest/log_append.yml", "regtest/log_rewrite.log", "regtest/log_rewrite.rb", "regtest/log_rewrite.yml", "regtest/metatest.rb", "regtest/metatest.yml", "regtest/metatest_git.rb", "regtest/metatest_git.yml", "regtest/no_samples.rb", "regtest/toplevel.log", "regtest/toplevel.rb", "regtest/toplevel.yml"]
+  s.files = ["./.aspell.pws", "Changelog", "Gemfile", "LICENSE", "README.md", "Rakefile", "lib/regtest", "lib/regtest.rb", "lib/regtest/colors.rb", "lib/regtest/git.rb", "lib/regtest/task.rb", "lib/regtest/version.rb", "regtest.gemspec"]
   s.homepage = "https://github.com/janfri/regtest"
   s.licenses = ["Ruby"]
   s.required_ruby_version = Gem::Requirement.new(">= 2.1.0")
-  s.rubygems_version = "3.2.3"
+  s.rubygems_version = "3.5.0.dev"
   s.summary = "Simple regression testing with Ruby."
 
-  if s.respond_to? :specification_version then
-    s.specification_version = 4
-  end
+  s.specification_version = 4
 
-  if s.respond_to? :add_runtime_dependency then
-    s.add_development_dependency(%q<rake>, [">= 0"])
-    s.add_development_dependency(%q<rim>, ["~> 2.17"])
-    s.add_development_dependency(%q<regtest>, ["~> 2"])
-  else
-    s.add_dependency(%q<rake>, [">= 0"])
-    s.add_dependency(%q<rim>, ["~> 2.17"])
-    s.add_dependency(%q<regtest>, ["~> 2"])
-  end
+  s.add_development_dependency(%q<rake>, [">= 0"])
+  s.add_development_dependency(%q<rim>, ["~> 2.17"])
 end

@@ -4,7 +4,6 @@
 $:.unshift 'lib'
 
 require 'rim/tire'
-require 'rim/regtest'
 require 'rim/version'
 
 require 'regtest/task'
