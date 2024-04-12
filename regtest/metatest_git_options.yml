@@ -1,0 +1,49 @@
+---
+sample: without --work-tree and without --git-dir
+result:
+  stdout: |
+    work_tree/sample.yml
+    .
+
+    1 samples executed in x.xx s (x samples/s)
+
+    git command coud not be executed!
+  stderr: ''
+  exitstatus: 2
+---
+sample: with --work-tree and without --git-dir
+result:
+  stdout: |
+    work_tree/sample.yml
+    .
+
+    1 samples executed in x.xx s (x samples/s)
+
+    git command coud not be executed!
+  stderr: ''
+  exitstatus: 2
+---
+sample: without --work-tree and with --git-dir
+result:
+  stdout: |
+    work_tree/sample.yml
+    .
+
+    1 samples executed in x.xx s (x samples/s)
+
+    There is at least one new sample result file.
+    ?? work_tree/sample.yml
+  stderr: ''
+  exitstatus: 1
+---
+sample: with --work-tree and with --git-dir
+result:
+  stdout: |
+    work_tree/sample.yml
+    .
+
+    1 samples executed in x.xx s (x samples/s)
+
+    Looks good. :)
+  stderr: ''
+  exitstatus: 0
