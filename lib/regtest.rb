@@ -3,7 +3,8 @@
 #
 # Regtest - Simple Regression Testing With Ruby
 #
-# Copyright 2014, 2015, 2017-2019 by Jan Friedrich <janfri26@gmail.com>
+# Copyright 2014, 2015, 2017-2019, 2021, 2024 by Jan Friedrich
+# <janfri26@gmail.com>
 # License: Regtest is licensed under the same terms as Ruby itself.
 #
 
@@ -21,6 +22,7 @@ module Regtest
   @log_filenames = Set.new
   @exit_codes = Hash.new(1)
   @exit_codes.merge!({success: 0, unknown_result: 1, fail: 2})
+  @show_exceptions = false
 
   # Define a sample
   def sample name
@@ -31,6 +33,9 @@ module Regtest
       h['result'] = yield
     rescue Exception => e
       h['exception'] = e.message
+      if show_exceptions
+        $stderr.puts nil, e.full_message
+      end
     end
     output_filename = Regtest.determine_filename_from_caller('.yml')
     unless Regtest.results[output_filename]
@@ -95,6 +100,9 @@ module Regtest
   class << self
 
     attr_reader :exit_codes, :log_filenames, :results, :start
+
+    # Flag to show exceptions on STDERR
+    attr_accessor :show_exceptions
 
     # Determine a filename which is derived from the filename of the "real"
     # caller of the calling method
