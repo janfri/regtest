@@ -219,6 +219,22 @@ Because the log files contains only temporary stuff they should normally not
 checked in the SCM.
 
 
+## Exceptions an backtraces
+
+If there is an exception raised inside a regtest sample its message is a part
+of the result of the sample. This is intentional because exceptions are
+possible results you want to check.
+
+But sometimes an exception occur inside of a sample that was not the intention
+of the sample code. In such situation it would be helpful to have the full
+exception message with the backtrace, to find the code location where the error
+occurred.
+
+You can do this with setting `Regtest.show_exceptions = true` (normally in a
+local `.regtestrc` file, see below) temporarily. Then the exception and
+backtrace is written to STDERR.
+
+
 ## Configuration and Plugins
 
 You can adapt the behaviour of regtest with plugins. To configure this and
@@ -255,10 +271,26 @@ Regtest.exit_codes[:unknown_result] = 0
 Regtest.exit_codes[:fail] = 0 
 ```
 
-This also should be don in a `.regtest` file and not in the sample files.
+This also should be done in a `.regtest` file and not in the sample files.
 
 Because in a `.regtestrc` file are individual configuration aspects of your
 workflow and environment it should not be checked into your SCM.
+
+
+## Plugin regtest/git
+
+If you use the git plugin (`require 'regtest/git'`) there will be two options
+you can set:
+
+* `Regtest::Git.git_dir`
+* `Regtest::Git.work_tree`
+
+which corresponds to the git parameters `--git-dir` and `--work-path`. Which
+could be helpful if you run `regtest` from inside an other git repository than
+your regtest files. Have a look at the git documentation for more details.
+
+As said above: this should also be done in a local `.regtestrc` file.
+
 
 ## Rake task
 
