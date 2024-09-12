@@ -1,3 +1,11 @@
+2.3.0
+Remove regtest/colorize use regtest/colors instead.
+Add Regtest::Git.work_tree and Regtest::Git.git_dir to be more flexible when
+using different git repositories.
+Add flag Regtest.show_exceptions for easier analysing problems when unexpected
+exceptions occur.
+Optimize some internals.
+
 2.2.1
 Adapt git output to work with different git versions.
 Simplify determination of filenames for outputs.
