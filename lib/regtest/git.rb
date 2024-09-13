@@ -15,6 +15,9 @@ begin
       # Redefine Regtest.check_results.
       def check_results
         output_files = Regtest.results.keys
+        if Git.C || Git.work_tree
+          output_files.map! {|fn| File.expand_path(fn)}
+        end
         if output_files.empty?
           report "\nNothing to do.", type: :success
           return :success

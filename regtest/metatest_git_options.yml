@@ -44,6 +44,7 @@ result:
 
     1 samples executed in x.xx s (x samples/s)
 
-    Looks good. :)
+    There is at least one new sample result file.
+    ?? sample.yml
   stderr: ''
-  exitstatus: 0
+  exitstatus: 1
