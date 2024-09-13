@@ -285,7 +285,7 @@ you can set:
 * `Regtest::Git.git_dir`
 * `Regtest::Git.work_tree`
 
-which corresponds to the git parameters `--git-dir` and `--work-path`. Which
+which corresponds to the git parameters `--git-dir` and `--work-tree`. Which
 could be helpful if you run `regtest` from inside an other git repository than
 your regtest files. Have a look at the git documentation for more details.
 
