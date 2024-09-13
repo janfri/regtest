@@ -282,12 +282,14 @@ workflow and environment it should not be checked into your SCM.
 If you use the git plugin (`require 'regtest/git'`) there will be two options
 you can set:
 
+* `Regtest::Git.C`
 * `Regtest::Git.git_dir`
 * `Regtest::Git.work_tree`
 
-which corresponds to the git parameters `--git-dir` and `--work-tree`. Which
-could be helpful if you run `regtest` from inside an other git repository than
-your regtest files. Have a look at the git documentation for more details.
+which corresponds to the git parameters `-C`, `--git-dir` and `--work-tree`.
+Which could be helpful if you run `regtest` from inside some other git
+repository than your regtest files. Have a look at the git documentation for
+more details.
 
 As said above: this should also be done in a local `.regtestrc` file.
 

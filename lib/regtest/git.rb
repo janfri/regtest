@@ -46,6 +46,9 @@ begin
       end
 
       class << self
+        # git parameter +-C+
+        attr_accessor :C
+
         # git parameter +--work-tree+
         attr_accessor :work_tree
 
@@ -57,11 +60,15 @@ begin
 
       def git_global_args
         args = []
+        if c = Regtest::Git.C
+          args <<  '-C'
+          args << c
+        end
         if wt = Regtest::Git.work_tree
           args << format('--work-tree=%s', wt)
         end
-        if gt = Regtest::Git.git_dir
-          args << format('--git-dir=%s', gt)
+        if gd = Regtest::Git.git_dir
+          args << format('--git-dir=%s', gd)
         end
         args
       end
