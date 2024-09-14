@@ -1,3 +1,7 @@
+2.4.1
+Fix a bug when using Regtest::Git.C or Regtest::Git.git_dir with relative
+paths for filenames.
+
 2.4.0
 Add parameter Regtest::Git.C.
 
