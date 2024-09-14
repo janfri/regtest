@@ -59,6 +59,14 @@ begin
         execute 'git add sample.rb'
       end
       run_samples work_tree_dir, git_dir
+      Dir.chdir work_tree_dir do
+        execute 'git add sample.yml'
+      end
+      run_samples work_tree_dir, git_dir
+      Dir.chdir work_tree_dir do
+        execute 'git commit -m initial'
+      end
+      run_samples work_tree_dir, git_dir
     end
   end
 rescue Errno::ENOENT
