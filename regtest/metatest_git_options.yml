@@ -48,3 +48,16 @@ result:
     ?? sample.yml
   stderr: ''
   exitstatus: 1
+---
+sample: with -C
+result:
+  stdout: |
+    work_tree/sample.yml
+    .
+
+    1 samples executed in x.xx s (x samples/s)
+
+    There is at least one new sample result file.
+    ?? sample.yml
+  stderr: ''
+  exitstatus: 1

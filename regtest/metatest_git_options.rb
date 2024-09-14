@@ -21,7 +21,6 @@ begin
       # Levelling out runtime specific differences.
       res['stdout'].gsub!(/\d+\.\d+/, 'x.xx')
       res['stdout'].gsub!(%r(\d+ samples/s), 'x samples/s')
-      res['stdout'].gsub!(/^\?\? filename with spaces.yml$/m, '?? "filename with spaces.yml"')
       res['exitstatus'] = ps.exitstatus
       res
     end
@@ -54,6 +53,8 @@ begin
       create_sample 'without --work-tree and with --git-dir'
       File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.work_tree = '#{work_tree_dir}'; Regtest::Git.git_dir = '#{git_dir}'"
       create_sample 'with --work-tree and with --git-dir'
+      File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.C = '#{work_tree_dir}'"
+      create_sample 'with -C'
     end
   end
 rescue Errno::ENOENT
