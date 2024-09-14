@@ -26,6 +26,18 @@ begin
     end
   end
 
+  def run_samples work_tree_dir, git_dir
+    create_sample 'without --work-tree and without --git-dir'
+    File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.work_tree = '#{work_tree_dir}'"
+    create_sample 'with --work-tree and without --git-dir'
+    File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.git_dir = '#{git_dir}'"
+    create_sample 'without --work-tree and with --git-dir'
+    File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.work_tree = '#{work_tree_dir}'; Regtest::Git.git_dir = '#{git_dir}'"
+    create_sample 'with --work-tree and with --git-dir'
+    File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.C = '#{work_tree_dir}'"
+    create_sample 'with -C'
+  end
+
   def execute cmd
     Open3.capture2e cmd
   end
@@ -46,15 +58,7 @@ begin
         execute 'git init'
         execute 'git add sample.rb'
       end
-      create_sample 'without --work-tree and without --git-dir'
-      File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.work_tree = '#{work_tree_dir}'"
-      create_sample 'with --work-tree and without --git-dir'
-      File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.git_dir = '#{git_dir}'"
-      create_sample 'without --work-tree and with --git-dir'
-      File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.work_tree = '#{work_tree_dir}'; Regtest::Git.git_dir = '#{git_dir}'"
-      create_sample 'with --work-tree and with --git-dir'
-      File.write File.join(work_tree_dir, 'init.rb'), "Regtest::Git.C = '#{work_tree_dir}'"
-      create_sample 'with -C'
+      run_samples work_tree_dir, git_dir
     end
   end
 rescue Errno::ENOENT
