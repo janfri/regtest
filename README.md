@@ -279,8 +279,8 @@ workflow and environment it should not be checked into your SCM.
 
 ## Plugin regtest/git
 
-If you use the git plugin (`require 'regtest/git'`) there will be two options
-you can set:
+If you use the git plugin (`require 'regtest/git'`) there are the following
+options available:
 
 * `Regtest::Git.C`
 * `Regtest::Git.git_dir`
