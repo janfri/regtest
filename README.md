@@ -6,6 +6,9 @@ This library supports a very simple way to do regression testing with Ruby. It
 is not limited to Ruby projects you can use it also in other contexts where you
 can extract data with Ruby.
 
+The core idea is to test results against the results of an earlier run of the
+tests, not against defined results of a specification.
+
 You write Ruby scripts with samples. Run these and get the sample results as
 results files besides your scripts. Check both the scripts and the results
 files in you Source Code Management System (SCM). When you run the scrips on a
@@ -43,11 +46,14 @@ The idea behind regtest is the following workflow:
   5. Rerun your samples
   6. Check sample results for changes (this is normally automatically done with
      a regtest plugin like regtest/git).
+  7. If there are changed that are indented (new samples, corrected behaviour)
+     check the files in your SCM. If there are not intended changes, fix the
+     causes.
 
 
 ### Writing Samples
 
-A samples file is a simple Ruby script with one ore more samples, for example
+A samples file is a simple Ruby script with one ore more samples. Let's see an example
 
 ```ruby
 require 'regtest'
@@ -69,11 +75,11 @@ end
 The name of the sample (parameter of the `Regtest.sample` method) and the
 results of the samples (return value of the block) are stored in YAML format.
 So it should be a YAML-friendly value as `String`, `Number`, `Boolean value`,
-`Symbol`. Results could also be an `Array` or `Hash` with such values.
+`Symbol`. Also `arrays` and `hashes` are commonly used.
 
-In many cases you want to generate a lot of combinations of input data in your
+In some cases you want to generate a lot of combinations of input data in your
 sample code. For this there is a method `Regtest.combinations` to generate a
-lot of combinations the easy way. An example:
+lot of combinations in an easy way. An example:
 
 ```ruby
 require 'ostruct'
@@ -85,7 +91,7 @@ o.b = [:x, :y]
 Regtest.combinations(o)
 # => [#<OpenStruct a=1, b=:x>, #<OpenStruct a=1, b=:y>,
 #     #<OpenStruct a=2, b=:x>, #<OpenStruct a=2, b=:y>,
-#     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>] 
+#     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
 ```
 
 See also the combinations example in the `regtest` folder.
@@ -101,13 +107,13 @@ Whether you run your examples manually
 ruby -I lib regtest/*.rb
 ```
 
-or using the Rake task of regtest and add
+or using the Rake task of regtest by adding
 
 ```ruby
 require 'regtest/task'
 ```
 
-to your `Rakefile` and you can run your samples with `rake regtest`.
+to your `Rakefile`. Then you can run your samples with `rake regtest`.
 
 
 ### Checking Results
@@ -128,7 +134,7 @@ regtest/foo.yml
 regtest/bar.yml
 ```
 
-So the content of the results file of the example above is
+So the content of the results file of the first example above is
 
 ```yaml
 ---
@@ -142,8 +148,8 @@ exception: divided by 0
 Each time you run one ore more samples file the corresponding results files will
 be overwritten (or generated if not yet existent) with the actual result values
 of your samples. The determination of changes between the results of actual and
-older runs of the samples is done by your SCM. So the sample files and their
-corresponding results files should be taken under version control.
+older runs of the samples is done by your SCM. Therefore the sample files and
+their corresponding results files should be taken under version control.
 
 
 ## Logging
@@ -153,7 +159,7 @@ if this assumption is true at another (mostly later) state of code. But often
 there are temporary or specific values which changes or could change at each
 run of regtest. This could be for example an id of a created record or the
 version of a used external service or some time-relevant values. Sometimes it
-is useful, to know the actual value of one of these.
+is useful, to know the actual values of some of these.
 
 In such cases the method ```Regtest.log``` could be handy. It writes a line of
 the given object to a log file which is named with the same name as the calling
@@ -219,22 +225,6 @@ Because the log files contains only temporary stuff they should normally not
 checked in the SCM.
 
 
-## Exceptions an backtraces
-
-If there is an exception raised inside a regtest sample its message is a part
-of the result of the sample. This is intentional because exceptions are
-possible results you want to check.
-
-But sometimes an exception occur inside of a sample that was not the intention
-of the sample code. In such situation it would be helpful to have the full
-exception message with the backtrace, to find the code location where the error
-occurred.
-
-You can do this with setting `Regtest.show_exceptions = true` (normally in a
-local `.regtestrc` file, see below) temporarily. Then the exception and
-backtrace is written to STDERR.
-
-
 ## Configuration and Plugins
 
 You can adapt the behaviour of regtest with plugins. To configure this and
@@ -244,40 +234,56 @@ home directory and then in the local directory. So you can do global
 configurations in the first one and project specific configurations in the
 latter.
 
-For example the following is a good default when you want colorized output and
-use git as your SCM:
+Normally the check of changes in results is done automatically by a regtest
+plugin like regtest/git (see below). In this case the report will show you if
+there are changes or not and the exit code of the script is accordingly set.
+The standard values are: `0` for success, `1` for an unknown result (normally a
+new results file) and `2` for failure. If you use plain regtest without a SCM
+plugin the exit code is `1` (= unknown result).
+
+You can change the exit codes for the states with `Regtest.exit_codes`. The
+following example changes the behaviour to the same as in regtest version 1.x.
+
+```ruby
+Regtest.exit_codes[:unknown_result] = 0
+Regtest.exit_codes[:fail] = 0
+```
+
+This should be done in a `.regtestrc` file and not in sample files.
+
+Because in a `.regtestrc` file are individual configuration aspects of your
+workflow and environment it should not be checked into your SCM.
+
+
+### Plugin regtest/colors
+
+When using the regtest/colors plugin (`require 'regtest/colors'`) it is
+possible to adapt the colors of the output of different types of messages. The
+following mappings are possible:
+
+* `:filename`
+* `:statistics`
+* `:success`
+* `:unknown_result`
+* `:fail`
+
+The configuration is done as the following example shows:
 
 ```ruby
 require 'regtest/colors'
 # adapt some colorizing if wanted
 Regtest::Colors.mapping[:filename] = :cyan
 Regtest::Colors.mapping[:statistics] = %i(blue italic)
+Regtest::Colors.mapping[:fail] = %i(white @red)
 
-require 'regtest/git'
 ```
 
-Normally the check of changes in results is done automatically by a regtest
-plugin like regtest/git (see example for `.regtestrc` above). In this case the
-report will show you if there are changes or not and the exit code of the
-script is accordingly set. The standard values are: 0 for success, 1 for an
-unknown result (normally a new results file) and 2 for failure. If you use
-plain regtest without a SCM plugin the exit code is 1 (= unknown result).
-
-You can change the exit codes for the states with `Regtest.exit_codes`. The
-following example changes the behaviour to the same as in regtest version 1.x.
-
-```ruby
-Regtest.exit_codes[:unknown_result] = 0 
-Regtest.exit_codes[:fail] = 0 
-```
-
-This also should be done in a `.regtest` file and not in the sample files.
-
-Because in a `.regtestrc` file are individual configuration aspects of your
-workflow and environment it should not be checked into your SCM.
+As you see there are colors an modifiers (as `blue italic`) possible. Color
+codes with prefix `@` are background colors. Run `Regtest::Colors.codes` to get
+a list off possible color codes.
 
 
-## Plugin regtest/git
+### Plugin regtest/git
 
 If you use the git plugin (`require 'regtest/git'`) there are the following
 options available:
@@ -291,7 +297,23 @@ Which could be helpful if you run `regtest` from inside some other git
 repository than your regtest files. Have a look at the git documentation for
 more details.
 
+Be aware when using this options. It is possible to get unwanted results.
+
 As said above: this should also be done in a local `.regtestrc` file.
+
+
+### Example of a .regtestrc file
+
+The following is a good default when you want colorized output and
+use git as your SCM:
+
+```ruby
+require 'regtest/colors'
+require 'regtest/git'
+```
+
+See above for more information about the plugins `regtest/colors` and
+`regtest/git`.
 
 
 ## Rake task
@@ -308,8 +330,94 @@ REGTEST_FILES_RB.clear << 'my_regtest_file.rb'
 REGTEST_FILES.clear << 'my_regtest_file.rb' << 'my_regtest_file.yml' << 'other_file'
 ```
 
-It's a little bit old school like `CLEAN` and `CLOBBER` but I like the simple
-approach to use constants.
+It's a little bit old school like `CLEAN` and `CLOBBER` in `rake/clean` but I
+like the simple approach to use constants.
+
+
+## Best practise
+
+### Use Ruby
+
+As said above the sample files are plain Ruby scripts. Yes Ruby is a scripting
+language. So use the power of Ruby to get the things done you need. Some food
+for thought:
+
+* Generate samples inside of loops.
+* Use `String#gsub` to level out runtime specific values. For example, if you
+  get a response of a web service "Record 4711 created" and do a `sub(/\d+/,
+  '#')` the `4711` is eliminated and the string is invariant between different
+  runs of regtest.
+* Use compare operators to get invariant values for sample results.
+
+
+### Know your SCM
+
+I use git as SCM for my work. Here are some hints how I check changes in the
+results files:
+
+```shell
+git diff --ignore-all-space -- regtest/*.yml
+git diff --color-words --ignore-all-space -- regtest/*.yml
+git diff --color-words=. --ignore-all-space
+git diff --color-words=\\w+ --ignore-all-space
+git diff --color-moved
+```
+
+
+### Unexpected exceptions
+
+If there is an exception raised inside a regtest sample its message is a part
+of the result of the sample. This is intentional because exceptions are
+possible results you want to check.
+
+But sometimes an exception occur inside of a sample that was not the intention
+of the sample code. In such situation it would be helpful to have the full
+exception message with the backtrace, to find the code location where the error
+occurred.
+
+You can do this with setting `Regtest.show_exceptions = true` Then the
+exception and backtrace is written to STDERR.
+
+Example
+
+```Ruby
+Regtest.sample 'something' do
+  # ...
+end
+
+Regtest.sample 'something goes wrong' do
+  Regtest.show_exceptions = true
+  # the code that causes the problem
+  Regtest.show_exceptions = false
+end
+
+Regtest.sample 'another thing' do
+  # ...
+end
+```
+
+Alternatively the use of the Ruby debugger (`require 'debug'`) could be helpful (Know Ruby):
+
+```ruby
+Regtest.sample 'something' do
+  # ...
+end
+
+Regtest.sample 'something goes wrong' do
+  IRB.debugger
+  # the code that causes the problem
+end
+
+Regtest.sample 'another thing' do
+  # ...
+end
+```
+
+
+### Regtest is not thread safe
+
+The methods `Regtest.sample` and `Regtest.log` are not thread safe. So you have
+to ensure they are executed in a sequential order to avoid unexpected results.
 
 
 ## Further information
