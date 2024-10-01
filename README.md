@@ -3,22 +3,22 @@
 ## Description
 
 This library supports a very simple way to do regression testing with Ruby. It
-is not limited to Ruby projects you can use it also in other contexts where you
-can extract data with Ruby.
+is not limited to Ruby projects; you can use it also in other contexts where
+you can extract data with Ruby.
 
 The core idea is to test results against the results of an earlier run of the
 tests, not against defined results of a specification.
 
 You write Ruby scripts with samples. Run these and get the sample results as
-results files besides your scripts. Check both the scripts and the results
-files in you Source Code Management System (SCM). When you run the scrips on a
-later (or even previous) version of your code a simple diff show you if and how
-the changes in your code or environment impact the results of your samples.
+result files beside your scripts. Check both the scripts and the result files
+in your Source Code Management System (SCM). When you run the scripts on a
+later (or even previous) version of your code, a simple diff will show you if
+and how the changes in your code or environment impact the results of your
+samples.
 
 This is not a replacement for unit testing but a complement: You can produce a
-lot of samples with a small amount of Ruby code (e.g. a large number of
+lot of samples with a small amount of Ruby code (e.g., a large number of
 combinations of data).
-
 
 ## Installation
 
@@ -41,19 +41,19 @@ to your Gemfile.
 The idea behind regtest is the following workflow:
   1. Writing samples
   2. Running samples
-  3. Commit samples and result files to SCM.
-  4. Change your code and / or external environment.
-  5. Rerun your samples
-  6. Check sample results for changes (this is normally automatically done with
-     a regtest plugin like regtest/git).
-  7. If there are changed that are indented (new samples, corrected behaviour)
-     check the files in your SCM. If there are not intended changes, fix the
-     causes.
+  3. Committing samples and result files to SCM
+  4. Changing code and/or external environment
+  5. Rerunning the samples
+  6. Checking sample results for changes (this is normally automatically done with
+     a regtest plugin like regtest/git)
+  7. If there are changed that are indented (new samples, corrected behavior)
+     committing the files to the SCM - if there are unintended changes, fix the
+     causes
 
 
 ### Writing Samples
 
-A samples file is a simple Ruby script with one ore more samples. Let's see an example
+A samples file is a simple Ruby script with one or more samples. Let's see an example
 
 ```ruby
 require 'regtest'
@@ -94,9 +94,10 @@ Regtest.combinations(o)
 #     #<OpenStruct a=3, b=:x>, #<OpenStruct a=3, b=:y>]
 ```
 
-See also the combinations example in the `regtest` folder.
+See also the example `combinations` in directory `regtest` of this repository.
 
-By convention sample files are stored in a directory `regtest` in your Ruby application.
+By convention samples files are stored in a directory names `regtest` in your
+Ruby application.
 
 
 ### Running Samples
@@ -145,30 +146,31 @@ sample: Division by zero
 exception: divided by 0
 ```
 
-Each time you run one ore more samples file the corresponding results files will
-be overwritten (or generated if not yet existent) with the actual result values
-of your samples. The determination of changes between the results of actual and
-older runs of the samples is done by your SCM. Therefore the sample files and
-their corresponding results files should be taken under version control.
+Each time you run one or more samples files, the corresponding results files
+will be overwritten (or generated if they do not yet exist) with the actual
+results values of your samples. The determination of changes between the
+results of actual and older runs of the samples is done by your SCM. Therefore
+the sample files and their corresponding results files should be taken under
+version control.
 
 
 ## Logging
 
 The key idea behind regtest is to produce values that are invariant and check
 if this assumption is true at another (mostly later) state of code. But often
-there are temporary or specific values which changes or could change at each
-run of regtest. This could be for example an id of a created record or the
+there are temporary or specific values which change or could change at each
+run of regtest. This could be, for example, an id of a created record or the
 version of a used external service or some time-relevant values. Sometimes it
 is useful, to know the actual values of some of these.
 
-In such cases the method ```Regtest.log``` could be handy. It writes a line of
-the given object to a log file which is named with the same name as the calling
-Ruby script but has as extension ```.log```. It could be called inside as well
-as outside of a regtest sample. Per default this file is overwritten by the
-first call of ```Regtest.log``` of each run of regtest and per file. And each
-further call of ```Regtest.log``` appends then to the file.  So you get a
-complete log for each run. But this behaviour could be changed with the
-```mode``` keyword arg of the method. Let's see an example:
+In such cases the method `Regtest.log` could be handy. It writes a line of the
+given object to a log file which is named with the same name as the calling
+Ruby script but has the extension `.log`. It could be called inside as well as
+outside of a regtest sample. As default this file is overwritten by the first
+call of `Regtest.log` of each run of regtest and per file. And each further
+call of `Regtest.log` appends then to the file.  So you get a complete log for
+each run. This behavior could be changed with the `mode` keyword argument of
+the method. Let's see an example:
 
 ```ruby
 Regtest.log RUBY_VERSION
@@ -197,7 +199,7 @@ end
 ```
 
 If you want to have a log that is not truncated at each run of regtest, you can
-use ```mode: 'a'```at the first call of ```Regtest.log``` in the corresponding
+use `mode: 'a'` at the first call of `Regtest.log` in the corresponding
 ruby script.
 
 ```ruby
@@ -206,8 +208,8 @@ ruby script.
 Regtest.log Time.now, mode: 'a'
 ```
 
-On the other hand, you can use ```mode: 'w'``` to truncate the log file even at
-a later call of ```Regtest.log```.
+On the other hand, you can use `mode: 'w'` to truncate the log file even at a
+later call of `Regtest.log`.
 
 ```ruby
 max_time = 0
@@ -221,28 +223,27 @@ ary.each do |e|
 end
 ```
 
-Because the log files contains only temporary stuff they should normally not
-checked in the SCM.
+Because the log files contain only temporary information, they should normally
+not be checked into the SCM.
 
 
 ## Configuration and Plugins
 
-You can adapt the behaviour of regtest with plugins. To configure this and
-maybe other things regtest support a simple rc file mechanism. While loading
-regtest via `require 'regtest'` it looks for a file `.regtestrc` first in your
-home directory and then in the local directory. So you can do global
-configurations in the first one and project specific configurations in the
-latter.
+You can adapt the behavior of regtest with plugins. To configure this and maybe
+other things regtest supports a simple rc file mechanism. While loading regtest
+via `require 'regtest'` it looks for a file `.regtestrc` first in your home
+directory and then in the local directory. So you can do global configurations
+in the first one and project-specific configurations in the latter.
 
-Normally the check of changes in results is done automatically by a regtest
-plugin like regtest/git (see below). In this case the report will show you if
-there are changes or not and the exit code of the script is accordingly set.
+Normally, the check of changes in results is done automatically by a regtest
+plugin like regtest/git (see below). In this case, the report will show you if
+there are changes or not, and the exit code of the script is accordingly set.
 The standard values are: `0` for success, `1` for an unknown result (normally a
-new results file) and `2` for failure. If you use plain regtest without a SCM
-plugin the exit code is `1` (= unknown result).
+new results file), and `2` for failure. If you use plain regtest without a SCM
+plugin, the exit code is `1` (= unknown result).
 
 You can change the exit codes for the states with `Regtest.exit_codes`. The
-following example changes the behaviour to the same as in regtest version 1.x.
+following example changes the behavior to the same as in regtest version 1.x.
 
 ```ruby
 Regtest.exit_codes[:unknown_result] = 0
@@ -252,7 +253,7 @@ Regtest.exit_codes[:fail] = 0
 This should be done in a `.regtestrc` file and not in sample files.
 
 Because in a `.regtestrc` file are individual configuration aspects of your
-workflow and environment it should not be checked into your SCM.
+workflow and environment, it should not be checked into your SCM.
 
 
 ### Plugin regtest/colors
@@ -275,17 +276,16 @@ require 'regtest/colors'
 Regtest::Colors.mapping[:filename] = :cyan
 Regtest::Colors.mapping[:statistics] = %i(blue italic)
 Regtest::Colors.mapping[:fail] = %i(white @red)
-
 ```
 
-As you see there are colors an modifiers (as `blue italic`) possible. Color
-codes with prefix `@` are background colors. Run `Regtest::Colors.codes` to get
-a list off possible color codes.
+As you can see there are colors and modifiers (such as `[:blue, :italic]`)
+possible. Color codes with prefix `@` are background colors. Run
+`Regtest::Colors.codes` to get a list of possible color codes.
 
 
 ### Plugin regtest/git
 
-If you use the git plugin (`require 'regtest/git'`) there are the following
+If you use the git plugin (`require 'regtest/git'`), there are the following
 options available:
 
 * `Regtest::Git.C`
@@ -293,11 +293,11 @@ options available:
 * `Regtest::Git.work_tree`
 
 which corresponds to the git parameters `-C`, `--git-dir` and `--work-tree`.
-Which could be helpful if you run `regtest` from inside some other git
+These could be helpful if you run `regtest` from inside some other git
 repository than your regtest files. Have a look at the git documentation for
 more details.
 
-Be aware when using this options. It is possible to get unwanted results.
+Be aware when using these options. It is possible to get unwanted results.
 
 As said above: this should also be done in a local `.regtestrc` file.
 
@@ -318,10 +318,10 @@ See above for more information about the plugins `regtest/colors` and
 
 ## Rake task
 
-Regtest includes a Rake task `regtest`. Per default it runs any `.rb` files
+Regtest includes a Rake task `regtest`. By default it runs any `.rb` files
 under the `regtest` directory and includes all files under the `regtest`
-directory to the files packaged with gem.
-You can change these defaults like this
+directory to the files packaged with gem.  You can change these defaults like
+this:
 
 ```ruby
 require 'regtest/task'
@@ -338,15 +338,15 @@ like the simple approach to use constants.
 
 ### Use Ruby
 
-As said above the sample files are plain Ruby scripts. Yes Ruby is a scripting
-language. So use the power of Ruby to get the things done you need. Some food
-for thought:
+As said above, the sample files are plain Ruby scripts. Yes, Ruby is a
+scripting language. So use the power of Ruby to get the things done you need.
+Some food for thought:
 
 * Generate samples inside of loops.
 * Use `String#gsub` to level out runtime specific values. For example, if you
-  get a response of a web service "Record 4711 created" and do a `sub(/\d+/,
-  '#')` the `4711` is eliminated and the string is invariant between different
-  runs of regtest.
+get a response of a web service "Record 4711 created" and do a
+`sub(/\d+/, '#')` the `4711` is eliminated and the string is invariant between
+different runs of regtest.
 * Use compare operators to get invariant values for sample results.
 
 
@@ -423,7 +423,7 @@ to ensure they are executed in a sequential order to avoid unexpected results.
 ## Further information
 
 I use `regtest` in my project [scripref](https://github.com/janfri/scripref) to
-generate a lot of malformed input data to check regressions in the behaviour of
+generate a lot of malformed input data to check regressions in the behavior of
 the parser and text processor.
 
 A little different is the usage in my projects
