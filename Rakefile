@@ -43,8 +43,8 @@ end
 
 task :before_regtest do
   verbose false do
-    rm_rf 'regtest/*.log'
-    rm_rf 'regtest/*.yml'
+    temp_files = FileList.new('regtest/*.{log,yml}')
+    temp_files.each {|fn| rm fn}
   end
 end
 
