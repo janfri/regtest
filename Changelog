@@ -1,3 +1,7 @@
+2.5.0
+Update README.
+Use rim 3.0 for development.
+
 2.4.1
 Fix a bug when using Regtest::Git.C or Regtest::Git.git_dir with relative
 paths for filenames.
